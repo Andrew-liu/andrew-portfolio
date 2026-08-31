@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Andrew Liu 的个人作品集：AI 产品、系统工程与技术写作。">
+  <meta name="theme-color" content="#f3f6f7">
+  <title>Andrew Liu — Builder of AI Tools</title>
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml" sizes="any">
+  <link rel="shortcut icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Andrew Liu 首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" focusable="false">
+          <path class="brand-d" d="M9 8h7.5C24 8 28 11.7 28 18s-4 10-11.5 10H9V8Z"/>
+          <path class="brand-signal" d="m13 23 4-8 3.5 4 4-7"/>
+          <circle cx="24.5" cy="12" r="2"/>
+        </svg>
+      </span>
+      <span>Andrew Liu</span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#work">项目</a>
+      <a href="https://blog.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">博客</a>
+      <a href="#about">关于</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="选择语言">
+        <button type="button" data-language="zh" aria-pressed="true">zh</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" data-language="en" aria-pressed="false">en</button>
+      </div>
+      <a class="header-link" href="https://github.com/Andrew-liu" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="status-dot"></span> Backend engineer · AI builder</p>
+        <h1 id="hero-title">把想法做成<br><span>能用的产品。</span></h1>
+        <p class="hero-intro">我是 Andrew，一名后端工程师。用 C++、Go 和 Python 构建系统，也把 AI Agent、信息聚合与开发者工具做成真正可用的产品。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">查看作品 <span aria-hidden="true">↓</span></a>
+          <a class="text-link" href="https://blog.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">阅读 Snow Memory <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+
+      <div class="hero-stage reveal" aria-label="从信号到产品的工程路径">
+        <div class="signal-map" aria-hidden="true">
+          <svg viewBox="0 0 620 520" preserveAspectRatio="none">
+            <path class="track track-base" d="M24 396 C112 396 118 142 228 142 S356 356 446 356 S508 112 596 112"/>
+            <path class="track track-live" d="M24 396 C112 396 118 142 228 142 S356 356 446 356 S508 112 596 112"/>
+          </svg>
+          <span class="node node-one"><b>01</b> SIGNAL</span>
+          <span class="node node-two"><b>02</b> SYSTEM</span>
+          <span class="node node-three"><b>03</b> PRODUCT</span>
+          <span class="pulse pulse-one"></span>
+          <span class="pulse pulse-two"></span>
+          <span class="pulse pulse-three"></span>
+        </div>
+        <div class="hero-note">
+          <span>Current focus</span>
+          <strong>AI Agents × LLM</strong>
+        </div>
+      </div>
+
+      <div class="hero-meta reveal">
+        <span>Shenzhen · China</span>
+        <span>C++ / Go / Python / Swift</span>
+        <span>Open source since 2014</span>
+      </div>
+    </section>
+
+    <section class="work section" id="work" aria-labelledby="work-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="section-kicker">Selected work</p>
+          <h2 id="work-title">四个正在生长的产品</h2>
+        </div>
+        <p>从每天的信息筛选，到本地设备上的 AI 开发体验。每个项目都从一个真实问题开始。</p>
+      </div>
+
+      <div class="project-grid">
+        <a class="project-card project-signal reveal" href="https://news.dinosaurliu.com/" target="_blank" rel="noopener noreferrer" aria-label="访问 AI Signal">
+          <div class="project-topline">
+            <span class="project-index">01 / AI intelligence</span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="signal-layout">
+            <div class="signal-intro">
+              <p class="project-label"><span></span> AI Signal</p>
+              <h3>从信息洪流中，<br>识别真正的信号。</h3>
+              <p>聚合过去 24 小时 AI 动态，合并重复报道，保留原始信源，把新闻流变成可判断的信号。</p>
+              <div class="signal-stats" aria-hidden="true">
+                <span><b>126</b><small>STORIES SCANNED</small></span>
+                <span><b>12</b><small>TRUSTED SOURCES</small></span>
+                <span><b>03</b><small>SIGNAL CLUSTERS</small></span>
+              </div>
+            </div>
+            <div class="signal-console" aria-hidden="true">
+              <div class="console-head">
+                <span><i></i> LIVE INTELLIGENCE FEED</span>
+                <span>UTC+8 · 09:42</span>
+              </div>
+              <div class="console-main">
+                <div class="trend-chart">
+                  <div class="chart-label"><span>SIGNAL VELOCITY</span><b>+34.8%</b></div>
+                  <svg viewBox="0 0 460 150" preserveAspectRatio="none">
+                    <defs><linearGradient id="signalFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63d7e6" stop-opacity=".42"/><stop offset="1" stop-color="#63d7e6" stop-opacity="0"/></linearGradient></defs>
+                    <path class="chart-area" d="M0 126 C36 118 54 126 82 101 S136 115 168 78 S222 91 252 62 S303 82 336 44 S389 60 460 15 L460 150 L0 150Z"/>
+                    <path class="chart-line" d="M0 126 C36 118 54 126 82 101 S136 115 168 78 S222 91 252 62 S303 82 336 44 S389 60 460 15"/>
+                  </svg>
+                  <span class="chart-now">NOW</span>
+                </div>
+                <ol class="signal-feed">
+                  <li><b>01</b><span><strong>New model release</strong><small>8 sources · HIGH CONFIDENCE</small></span><em>92</em></li>
+                  <li><b>02</b><span><strong>Agent ecosystem update</strong><small>5 sources · RISING</small></span><em>86</em></li>
+                  <li><b>03</b><span><strong>Open-source momentum</strong><small>4 sources · WATCH</small></span><em>79</em></li>
+                </ol>
+              </div>
+              <div class="console-foot"><span>FILTERED 68% NOISE</span><span>UPDATED 2 MIN AGO</span></div>
+            </div>
+          </div>
+          <div class="signal-ticker" aria-hidden="true"><span>MODEL RELEASES</span><i></i><span>AGENT WORKFLOWS</span><i></i><span>OPEN SOURCE</span><i></i><span>INFRASTRUCTURE</span><i></i><span>RESEARCH</span></div>
+        </a>
+
+        <a class="project-card project-rank reveal" href="https://airank.dinosaurliu.com/" target="_blank" rel="noopener noreferrer" aria-label="访问 My AI Rank">
+          <div class="project-topline">
+            <span class="project-index">02 / Interactive tool</span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="tier-preview" aria-hidden="true">
+            <span class="tier tier-s">S+</span><i></i><i></i><i></i>
+            <span class="tier tier-a">A</span><i></i><i></i>
+            <span class="tier tier-b">B</span><i></i><i></i><i></i>
+          </div>
+          <div class="project-copy">
+            <p class="project-label">My AI Rank</p>
+            <h3>拖一拖，排出你的 AI 榜单。</h3>
+            <p>排列常用模型与编程 Agent，并一键导出适合分享的 PNG。</p>
+          </div>
+        </a>
+
+        <a class="project-card project-aistat reveal" href="https://github.com/Andrew-liu/AIStat" target="_blank" rel="noopener noreferrer" aria-label="访问 AIStat GitHub 仓库">
+          <div class="project-topline">
+            <span class="project-index">03 / macOS utility</span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="aistat-preview" aria-hidden="true">
+            <div class="mac-pill"><span></span><b>AIStat</b><em>68%</em></div>
+            <div class="usage-ring"><span>68<small>%</small></span></div>
+            <div class="metric"><span>CODEX</span><b>5h window</b></div>
+            <div class="metric"><span>MEMORY</span><b>21.4 GB</b></div>
+          </div>
+          <div class="project-copy">
+            <p class="project-label">AIStat</p>
+            <h3>AI 用量与 Mac 状态，一眼掌握。</h3>
+            <p>本地优先的 macOS 菜单栏仪表盘，集中展示额度、成本、系统指标与 Keep Awake。</p>
+          </div>
+        </a>
+
+        <a class="project-card project-listening reveal" href="https://eng.dinosaurliu.com/" target="_blank" rel="noopener noreferrer" aria-label="访问 ListeningHub">
+          <div class="project-topline">
+            <span class="project-index">04 / Learning product</span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="wave-preview" aria-hidden="true">
+            <span style="--h:32%"></span><span style="--h:64%"></span><span style="--h:46%"></span><span style="--h:82%"></span><span style="--h:55%"></span><span style="--h:92%"></span><span style="--h:38%"></span><span style="--h:70%"></span><span style="--h:48%"></span><span style="--h:78%"></span><span style="--h:44%"></span><span style="--h:60%"></span>
+          </div>
+          <div class="project-copy">
+            <p class="project-label">ListeningHub</p>
+            <h3>听懂，而不只是听过。</h3>
+            <p>把双语字幕、纯听模式与词汇复习放进同一个学习闭环。</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="about section" id="about" aria-labelledby="about-title">
+      <div class="about-title reveal">
+        <p class="section-kicker">About</p>
+        <h2 id="about-title">工程是底色，<br><span>好奇心是驱动。</span></h2>
+      </div>
+      <div class="about-body reveal">
+        <p class="about-lead">多年后端与系统开发经验，让我习惯从可靠性、性能和边界条件出发；现在，我把这套方法带进 AI 产品。</p>
+        <p>我关注 Agent 工作流、RAG、Coding Agent 和本地模型，也持续记录真实的部署过程与踩坑经验。我更喜欢先做出一个小而完整的闭环，再让它在使用中长大。</p>
+        <div class="skill-row" aria-label="技术栈">
+          <span>C++</span><span>Go</span><span>Python</span><span>Swift</span><span>AI Agents</span><span>Distributed Systems</span>
+        </div>
+      </div>
+      <aside class="about-aside reveal">
+        <span class="aside-label">Working principle</span>
+        <blockquote>“从真实问题出发，<br>把复杂留在系统里。”</blockquote>
+        <a class="text-link" href="https://blog.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">访问个人博客 <span aria-hidden="true">↗</span></a>
+      </aside>
+    </section>
+
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-copy reveal">
+        <p class="section-kicker">Contact</p>
+        <h2 id="contact-title">有值得做的事？<br><span>一起聊聊。</span></h2>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:liu.bin.coder@gmail.com"><span>Email</span><strong>liu.bin.coder@gmail.com</strong><i aria-hidden="true">↗</i></a>
+        <a href="https://github.com/Andrew-liu" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>@Andrew-liu</strong><i aria-hidden="true">↗</i></a>
+        <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer"><span>X / Twitter</span><strong>@xueyu1125</strong><i aria-hidden="true">↗</i></a>
+        <a href="https://t.me/xueyu1125" target="_blank" rel="noopener noreferrer"><span>Telegram</span><strong>@xueyu1125</strong><i aria-hidden="true">↗</i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#top" aria-label="Andrew Liu 首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" focusable="false">
+          <path class="brand-d" d="M9 8h7.5C24 8 28 11.7 28 18s-4 10-11.5 10H9V8Z"/>
+          <path class="brand-signal" d="m13 23 4-8 3.5 4 4-7"/>
+          <circle cx="24.5" cy="12" r="2"/>
+        </svg>
+      </span>
+      <span>Andrew Liu</span>
+    </a>
+    <p>Building useful things with code and curiosity.</p>
+    <span>© <span id="year">2026</span></span>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页面顶部">
+    <span aria-hidden="true">↑</span>
+    <small>TOP</small>
+  </button>
+</body>
+</html>
