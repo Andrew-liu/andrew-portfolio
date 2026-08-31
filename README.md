@@ -1,6 +1,6 @@
 <div align="center">
-  <h1>Andrew Liu Portfolio</h1>
-  <p>Andrew Liu 的个人作品展示页</p>
+  <h1>雪瑜 Portfolio</h1>
+  <p>雪瑜的个人作品展示页</p>
   <p>
     <a href="https://blog.dinosaurliu.com/">个人博客</a> ·
     <a href="https://github.com/Andrew-liu">GitHub</a> ·
@@ -10,7 +10,7 @@
 
 ## 关于这个作品集
 
-这是 Andrew Liu 的个人作品展示页，用于集中呈现个人介绍、代表项目、工程经历与持续关注的方向。
+这是雪瑜的个人作品展示页，用于集中呈现个人介绍、代表项目、工程经历与持续关注的方向。
 
 页面以“把想法做成能用的产品”为核心表达，从真实问题出发，展示如何将后端工程经验、AI 技术探索和产品思考转化为可实际使用的作品。
 
@@ -34,4 +34,4 @@
 
 - [Snow Memory](https://blog.dinosaurliu.com/)：记录 AI、工程实践与产品思考
 - [GitHub](https://github.com/Andrew-liu)：查看开源项目与代码作品
-- [Telegram](https://t.me/xueyu1125)：联系 Andrew Liu
+- [Telegram](https://t.me/xueyu1125)：联系雪瑜
