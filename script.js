@@ -57,9 +57,9 @@ const translations = {
     focus: 'AI Agents × LLM',
     meta: ['Shenzhen · China', 'C++ / Go / Python / Swift', 'Open source since 2014'],
     workKicker: 'Selected work',
-    workTitle: '四个正在生长的产品',
+    workTitle: '五个正在生长的产品',
     workIntro: '从每天的信息筛选，到本地设备上的 AI 开发体验。每个项目都从一个真实问题开始。',
-    projectLabels: ['访问 AI Signal', '访问 My AI Rank', '访问 AIStat GitHub 仓库', '访问 ListeningHub'],
+    projectLabels: ['访问 AI Signal', '访问 My AI Rank', '访问 AIStat GitHub 仓库', '访问 ListeningHub', '查看 Snow X Assistant 产品介绍'],
     signalTitle: ['从信息洪流中，', '识别真正的信号。'],
     signalIntro: '聚合过去 24 小时 AI 动态，合并重复报道，保留原始信源，把新闻流变成可判断的信号。',
     signalStats: ['STORIES SCANNED', 'TRUSTED SOURCES', 'SIGNAL CLUSTERS'],
@@ -75,6 +75,8 @@ const translations = {
     aistatIntro: '本地优先的 macOS 菜单栏仪表盘，集中展示额度、成本、系统指标与 Keep Awake。',
     listeningTitle: '听懂，而不只是听过。',
     listeningIntro: '把双语字幕、纯听模式与词汇复习放进同一个学习闭环。',
+    snowxTitle: '看清哪条推文正在起飞。',
+    snowxIntro: '为 X 信息流标出推文流速、AI 腔指数与账号质量，附带视频下载和互关清理。标签只读页面已有数据，不额外请求接口。',
     aboutKicker: 'About',
     aboutTitle: ['工程是底色，', '好奇心是驱动。'],
     aboutLead: '多年后端与系统开发经验，让我习惯从可靠性、性能和边界条件出发；现在，我把这套方法带进 AI 产品。',
@@ -106,9 +108,9 @@ const translations = {
     focus: 'AI Agents × LLM',
     meta: ['Shenzhen · China', 'C++ / Go / Python / Swift', 'Open source since 2014'],
     workKicker: 'Selected work',
-    workTitle: 'Four products in progress',
+    workTitle: 'Five products in progress',
     workIntro: 'From daily information filtering to local AI development tools. Every project starts with a real problem.',
-    projectLabels: ['Visit AI Signal', 'Visit My AI Rank', 'Visit the AIStat GitHub repository', 'Visit ListeningHub'],
+    projectLabels: ['Visit AI Signal', 'Visit My AI Rank', 'Visit the AIStat GitHub repository', 'Visit ListeningHub', 'View the Snow X Assistant product page'],
     signalTitle: ['Find the signal', 'inside the noise.'],
     signalIntro: 'AI updates from the past 24 hours, deduplicated and clustered with every original source preserved—turning a news stream into actionable intelligence.',
     signalStats: ['STORIES SCANNED', 'TRUSTED SOURCES', 'SIGNAL CLUSTERS'],
@@ -124,6 +126,8 @@ const translations = {
     aistatIntro: 'A local-first macOS menu bar dashboard for quotas, costs, system metrics, and Keep Awake.',
     listeningTitle: 'Understand it—not just hear it.',
     listeningIntro: 'Bilingual subtitles, listening-only practice, and vocabulary review in one learning loop.',
+    snowxTitle: 'Spot the posts taking off—at a glance.',
+    snowxIntro: 'A Chrome extension that tags your X feed with view velocity, an AI-writing score, and account quality—plus video download and mutual-follow cleanup. Tags only read data the page already loaded.',
     aboutKicker: 'About',
     aboutTitle: ['Engineering is the foundation.', 'Curiosity is the engine.'],
     aboutLead: 'Years of backend and systems work taught me to start with reliability, performance, and edge cases. Now I bring that discipline to AI products.',
@@ -228,6 +232,8 @@ function applyLanguage(language, persist = true) {
   setText('.project-aistat .project-copy > p:last-child', copy.aistatIntro);
   setText('.project-listening .project-copy h3', copy.listeningTitle);
   setText('.project-listening .project-copy > p:last-child', copy.listeningIntro);
+  setText('.project-snowx .project-copy h3', copy.snowxTitle);
+  setText('.project-snowx .project-copy > p:last-child', copy.snowxIntro);
   setText('.about .section-kicker', copy.aboutKicker);
   setHeading('#about-title', copy.aboutTitle, true);
   setText('.about-lead', copy.aboutLead);

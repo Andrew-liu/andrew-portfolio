@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Snow X Assistant：为 X 信息流标出推文流速、AI 腔指数与账号质量的 Chrome 扩展。标签只读页面已有数据，不额外请求接口。">
+  <meta name="theme-color" content="#0f1419">
+  <title>Snow X Assistant — 看清哪条推文正在起飞</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="bar">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> 雪瑜的作品集</a>
+    <a class="product" href="#top">
+      <img src="images/icon.png" width="28" height="28" alt="">
+      <span>Snow X Assistant</span>
+    </a>
+    <a class="bar-link" href="https://github.com/Andrew-liu/snow-x-assistant" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Chrome 扩展 · Manifest V3 · v0.8.0</p>
+        <h1 id="hero-title">看清哪条推文<br><span>正在起飞。</span></h1>
+        <p class="lead">在 X 的信息流里，为每条推文标出实时流速和 AI 腔指数，为每个账号标出粉丝量级与质量。另附视频下载和一套克制、可控的互关清理工具。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/Andrew-liu/snow-x-assistant/releases/latest" target="_blank" rel="noopener noreferrer">下载最新版本 <span aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Andrew-liu/snow-x-assistant" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="facts" aria-label="项目特点">
+          <li><b>0</b><span>标签功能额外请求</span></li>
+          <li><b>8</b><span>套标签主题</span></li>
+          <li><b>MIT</b><span>开源，无构建</span></li>
+        </ul>
+      </div>
+      <figure class="hero-shot">
+        <img src="images/hero-dark.png" width="1204" height="950" alt="X 时间线中，推文头部显示流速、AI 概率和账号标签">
+      </figure>
+    </section>
+
+    <section class="section" id="features" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="kicker">01 / 功能</p>
+        <h2 id="features-title">四个功能，各自独立开关。</h2>
+        <p>只想看流速，就只开流速。所有改动即时生效，不用刷新页面。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-tag tag-red">🚀 10.3万/h</span>
+          <h3>推文流速</h3>
+          <p>浏览量除以发布至今的小时数。1k、5k、1w 起依次进入三档，档位越高越亮，爆款带光晕，滑动时一眼就能抓住。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-tag tag-purple">AI 94%</span>
+          <h3>AI 文本检测</h3>
+          <p>中英文两套规则，识别套话开场、总结收尾、万能夸夸回复和排版套路，给出 0 到 100 的 AI 腔指数。完全在本地计算。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-tag tag-green">大V · 高互动</span>
+          <h3>账号标签</h3>
+          <p>粉丝量级、关注/粉丝比，以及互关、未回关、大V、新号、老号、高互动、低活跃、疑似互粉号八种质量标签。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-tag tag-blue">↓ 1080p</span>
+          <h3>视频下载</h3>
+          <p>时间线操作栏多一个下载按钮，或在弹窗粘贴推文链接，按清晰度保存 mp4。仅限个人保存与学习使用。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" aria-labelledby="hover-title">
+      <figure class="split-shot narrow">
+        <img src="images/hovercard-dark.png" alt="悬停详情卡：账号数据、推文流速与 AI 检测明细" loading="lazy">
+      </figure>
+      <div class="split-copy">
+        <p class="kicker">02 / 细节</p>
+        <h2 id="hover-title">悬停一下，数据全摊开。</h2>
+        <p>悬停任意标签，弹出账号与推文的详细数据卡：粉丝、关注、比值、注册时长，浏览、赞、转、评、藏和爆款分，以及 AI 检测命中的具体规则。</p>
+        <ul class="ticks">
+          <li>自动适配 X 的浅色、暗蓝、纯黑三种背景</li>
+          <li>中文与英文界面，英文下数字用 K / M / B</li>
+          <li>标签可跟在名字后，也可单独一行，不让时间线跳动</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="themes-title">
+      <div class="section-head">
+        <p class="kicker">03 / 主题</p>
+        <h2 id="themes-title">八套主题，不只是换个颜色。</h2>
+        <p>热度条、信号灯、徽章、贴纸、终端、霓虹、原生文字、极光。形状、字体与排版各不相同，流速、AI 检测、账号标签和悬停卡共用同一套。</p>
+      </div>
+      <figure class="wide-shot">
+        <img src="images/themes.png" alt="八套标签主题总览" loading="lazy">
+      </figure>
+    </section>
+
+    <section class="section split reverse" aria-labelledby="mutual-title">
+      <div class="split-copy">
+        <p class="kicker">04 / 互关清理</p>
+        <h2 id="mutual-title">清理未回关，但节奏由你掌控。</h2>
+        <p>只在自己的「正在关注」页出现。筛出未回关账号，勾选后批量取关，点击的是 X 自带的按钮。</p>
+        <ul class="ticks">
+          <li>宁漏勿误：无法确认关系的账号不会被选中</li>
+          <li>间隔 1 到 5 秒可选，带随机抖动</li>
+          <li>每小时最多 50 人，跨刷新和多标签页共享额度</li>
+          <li>执行前二次确认，过程中随时可停</li>
+        </ul>
+      </div>
+      <figure class="split-shot">
+        <img src="images/mutual-cleanup.png" alt="互关清理工具栏" loading="lazy">
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="settings-title">
+      <div class="section-head">
+        <p class="kicker">05 / 设置</p>
+        <h2 id="settings-title">一个弹窗，五个页签。</h2>
+        <p>标签、主题、下载、互关清理、通用。顶部实时预览，改完立刻看到效果。</p>
+      </div>
+      <div class="popups">
+        <figure><img src="images/popup-tags.png" alt="标签设置页" loading="lazy"><figcaption>标签：开关、显示项与流速阈值</figcaption></figure>
+        <figure><img src="images/popup-themes.png" alt="主题选择页" loading="lazy"><figcaption>主题：大卡片预览，浅深色对比</figcaption></figure>
+        <figure><img src="images/popup-general.png" alt="通用设置页" loading="lazy"><figcaption>通用：外观、语言、作者与项目</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section privacy" aria-labelledby="privacy-title">
+      <div class="section-head">
+        <p class="kicker">06 / 隐私</p>
+        <h2 id="privacy-title">不让你的数据离开浏览器。</h2>
+      </div>
+      <dl class="privacy-grid">
+        <div><dt>网络请求</dt><dd>标签只读 X 页面已加载的 GraphQL 响应。唯一例外是视频下载：页面里没有数据时，请求一次 X 官方嵌入接口，不带 Cookie。</dd></div>
+        <div><dt>AI 检测</dt><dd>正文只在当前页面用本地规则打分，不上传、不调用任何模型接口。</dd></div>
+        <div><dt>存储</dt><dd>只保存你的设置和最近一小时的取关时间戳，不记录浏览历史。</dd></div>
+        <div><dt>第三方</dt><dd>无统计、无遥测、无远程配置、无 CDN 依赖。代码不压缩，可逐行审阅。</dd></div>
+      </dl>
+    </section>
+
+    <section class="section install" id="install" aria-labelledby="install-title">
+      <div class="section-head">
+        <p class="kicker">07 / 安装</p>
+        <h2 id="install-title">三分钟装好。</h2>
+        <p>暂未上架 Chrome 网上应用店，请以开发者模式加载。Edge、Brave、Arc 等 Chromium 浏览器通常也可用。</p>
+      </div>
+      <ol class="steps">
+        <li><b>下载</b><span>从 <a href="https://github.com/Andrew-liu/snow-x-assistant/releases/latest" target="_blank" rel="noopener noreferrer">GitHub Releases</a> 下载 zip 并解压。</span></li>
+        <li><b>开启开发者模式</b><span>打开 <code>chrome://extensions</code>，打开右上角的开发者模式。</span></li>
+        <li><b>加载扩展</b><span>点击「加载已解压的扩展程序」，选择包含 <code>manifest.json</code> 的目录。</span></li>
+        <li><b>打开 X</b><span>刷新 <a href="https://x.com" target="_blank" rel="noopener noreferrer">x.com</a>，标签就会出现在推文头部。</span></li>
+      </ol>
+      <div class="actions center">
+        <a class="btn btn-primary" href="https://github.com/Andrew-liu/snow-x-assistant/releases/latest" target="_blank" rel="noopener noreferrer">下载最新版本 <span aria-hidden="true">↓</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Andrew-liu/snow-x-assistant/issues" target="_blank" rel="noopener noreferrer">反馈问题 <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>为在 X 上认真阅读的人而做。本项目为个人开源作品，与 X Corp. 无任何关联。</p>
+    <p>
+      <a href="../">雪瑜的作品集</a> ·
+      <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer">@xueyu1125</a> ·
+      <a href="https://blog.dinosaurliu.com/snow-x-assistant/privacy.html" target="_blank" rel="noopener noreferrer">隐私政策</a> ·
+      <a href="https://github.com/Andrew-liu/snow-x-assistant/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+    </p>
+  </footer>
+</body>
+</html>

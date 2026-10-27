@@ -29,6 +29,7 @@
 | My AI Rank | 创建并分享自己的 AI 模型与编程 Agent 榜单 | [查看项目](https://airank.dinosaurliu.com/) |
 | AIStat | 在 macOS 菜单栏集中查看 AI 用量与设备状态 | [查看项目](https://github.com/Andrew-liu/AIStat) |
 | ListeningHub | 将听力练习、双语字幕与词汇复习连接成学习闭环 | [查看项目](https://eng.dinosaurliu.com/) |
+| Snow X Assistant | 为 X 信息流标出推文流速、AI 腔指数与账号质量的 Chrome 扩展 | [查看项目](snow-x-assistant/) |
 
 ## 个人主页
 
