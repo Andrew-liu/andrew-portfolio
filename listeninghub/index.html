@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ListeningHub：沉浸式英语听力练习平台。100 篇精选材料逐句精听、中英对照、生词本与间隔复习、背单词，纯静态可离线。">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>ListeningHub — 听懂，而不只是听过</title>
+  <link rel="icon" href="../assets/favicon.svg?v=4" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/product.css">
+</head>
+<body class="theme-listening">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="bar">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> 雪瑜的作品集</a>
+    <a class="product" href="#top"><span class="product-dot" aria-hidden="true"></span><span>ListeningHub</span></a>
+    <a class="bar-link" href="https://github.com/Andrew-liu/ListeningHub" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">英语学习 · Web / PWA · 可离线</p>
+        <h1 id="hero-title">听懂，<br><span>而不只是听过。</span></h1>
+        <p class="lead">基于 VOA Special English 的沉浸式听力练习。逐句精听、中英对照、点词即查，再把生词送进间隔复习，让每一次听力都留下点什么。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://eng.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">开始练习 <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ListeningHub" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="facts" aria-label="项目特点">
+          <li><b>100</b><span>篇精选材料</span></li>
+          <li><b>20</b><span>个学习主题</span></li>
+          <li><b>2.6万</b><span>词库词汇</span></li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src="images/hero.webp" width="1440" height="900" alt="ListeningHub 首页：用耳朵征服英语">
+      </figure>
+    </section>
+
+    <section class="section split" aria-labelledby="practice-title">
+      <figure class="shot">
+        <img src="images/preview.webp" width="1440" height="1040" alt="逐句精听界面：每句英文下方配有中文翻译，正在播放的句子高亮" loading="lazy">
+      </figure>
+      <div class="split-copy">
+        <p class="kicker">01 / 逐句精听</p>
+        <h2 id="practice-title">一句一句，听到真正听懂。</h2>
+        <p>每篇材料拆成十几句，可以单句循环，也可以整篇连播。正在读的句子会高亮，英文下方是中文翻译，随时显示或隐藏。</p>
+        <ul class="ticks">
+          <li>点击任意单词查词典，一键收进生词本</li>
+          <li>听写模式：听完默写，自动和原文比对</li>
+          <li>跟读录音：录下自己的发音，和原句对照</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="kicker">02 / 学习闭环</p>
+        <h2 id="features-title">听、记、复习，放在同一个地方。</h2>
+        <p>听力里遇到的生词，会在合适的时间再回来找你。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-num">VOCAB</span>
+          <h3>智能生词本</h3>
+          <p>收藏的单词按 SM-2 间隔复习算法排期，忘得越快，出现得越勤。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">WORDS</span>
+          <h3>背单词</h3>
+          <p>初高中、四六级、考研、托福、SAT 七大词库，卡片式记忆，释义可隐藏自测。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">SPELLING</span>
+          <h3>拼写模式</h3>
+          <p>拼错次数自动换算成复习评分，错三次以上的词会自动进入生词本。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">PROGRESS</span>
+          <h3>打卡与勋章</h3>
+          <p>记录打卡天数、连续学习和已听句数，15 枚成就勋章覆盖听力和词汇。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="arch-title">
+      <div class="section-head">
+        <p class="kicker">03 / 架构</p>
+        <h2 id="arch-title">没有账号，没有服务器。</h2>
+        <p>一个纯静态单页应用，打开就能用，装到桌面后断网也能练。</p>
+      </div>
+      <dl class="info-grid">
+        <div><dt>本地存储</dt><dd>学习进度、生词本、成就全部保存在本机浏览器里，不需要登录。</dd></div>
+        <div><dt>离线可用</dt><dd>支持 PWA 安装，Service Worker 缓存后无网也能继续练习。</dd></div>
+        <div><dt>零依赖</dt><dd>Vue 3 加 Tailwind CSS，不需要构建步骤，词库转成静态 JSON 分片按需加载。</dd></div>
+        <div><dt>三套主题</dt><dd>明亮、复古、暗黑三种配色，长时间阅读更护眼。</dd></div>
+      </dl>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <p class="kicker">04 / 开始使用</p>
+      <h2 id="cta-title">今天先听一篇，五分钟就够。</h2>
+      <p>直接在浏览器里打开，手机上也能用。</p>
+      <div class="actions center">
+        <a class="btn btn-primary" href="https://eng.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">开始练习 <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ListeningHub" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="more"><span>更多作品</span><a href="../ai-signal/">AI Signal</a><a href="../ai-rank/">My AI Rank</a><a href="../aistat/">AIStat</a><a href="../snow-x-assistant/">Snow X Assistant</a></p>
+    <p><a href="../">雪瑜的作品集</a> · <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer">@xueyu1125</a> · MIT License</p>
+  </footer>
+</body>
+</html>

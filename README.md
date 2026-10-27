@@ -17,19 +17,18 @@
 ## 页面内容
 
 - **个人介绍**：后端工程背景、技术方向与当前关注领域
-- **精选作品**：展示具有代表性的 AI 产品与开发者工具
-- **关于我**：介绍工程经验、工作方式与产品理念
+- **精选作品**：展示具有代表性的 AI 产品与开发者工具，每个作品都有独立的产品介绍页
 - **联系方式**：提供博客、GitHub 与 Telegram 入口
 
 ## 精选作品
 
 | 项目 | 简介 | 访问 |
 |------|------|------|
-| AI Signal | 从每日 AI 信息流中识别真正值得关注的信号 | [查看项目](https://news.dinosaurliu.com/) |
-| My AI Rank | 创建并分享自己的 AI 模型与编程 Agent 榜单 | [查看项目](https://airank.dinosaurliu.com/) |
-| AIStat | 在 macOS 菜单栏集中查看 AI 用量与设备状态 | [查看项目](https://github.com/Andrew-liu/AIStat) |
-| ListeningHub | 将听力练习、双语字幕与词汇复习连接成学习闭环 | [查看项目](https://eng.dinosaurliu.com/) |
-| Snow X Assistant | 为 X 信息流标出推文流速、AI 腔指数与账号质量的 Chrome 扩展 | [查看项目](snow-x-assistant/) |
+| AI Signal | 从每日 AI 信息流中识别真正值得关注的信号 | [产品介绍](https://www.dinosaurliu.com/ai-signal/) · [在线使用](https://news.dinosaurliu.com/) |
+| My AI Rank | 创建并分享自己的 AI 模型与编程 Agent 榜单 | [产品介绍](https://www.dinosaurliu.com/ai-rank/) · [在线使用](https://airank.dinosaurliu.com/) |
+| AIStat | 在 macOS 菜单栏集中查看 AI 用量与设备状态 | [产品介绍](https://www.dinosaurliu.com/aistat/) · [GitHub](https://github.com/Andrew-liu/AIStat) |
+| ListeningHub | 将听力练习、双语字幕与词汇复习连接成学习闭环 | [产品介绍](https://www.dinosaurliu.com/listeninghub/) · [在线使用](https://eng.dinosaurliu.com/) |
+| Snow X Assistant | 为 X 信息流标出推文流速、AI 腔指数与账号质量的 Chrome 扩展 | [产品介绍](https://www.dinosaurliu.com/snow-x-assistant/) |
 
 ## 个人主页
 

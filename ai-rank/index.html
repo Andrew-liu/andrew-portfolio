@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="My AI Rank：在浏览器里拖拽排出你的 AI 模型与 Agent 分级榜单，一键导出 PNG。纯静态，数据只存本地。">
+  <meta name="theme-color" content="#0b0b0c">
+  <title>My AI Rank — 拖一拖，排出你的 AI 榜单</title>
+  <link rel="icon" href="../assets/favicon.svg?v=4" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/product.css">
+</head>
+<body class="theme-rank">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="bar">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> 雪瑜的作品集</a>
+    <a class="product" href="#top"><span class="product-dot" aria-hidden="true"></span><span>My AI Rank</span></a>
+    <a class="bar-link" href="https://github.com/Andrew-liu/ai-rank" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Interactive tool · Web · 中 / EN</p>
+        <h1 id="hero-title">拖一拖，<br><span>排出你的 AI 榜单。</span></h1>
+        <p class="lead">把常用的大模型和编程 Agent 拖进不同档位，写上你的名字，一键导出一张适合发到社交平台的 PNG 榜单图。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://airank.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">开始排榜 <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ai-rank" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="facts" aria-label="项目特点">
+          <li><b>2</b><span>份榜单：模型与 Agent</span></li>
+          <li><b>5</b><span>个档位</span></li>
+          <li><b>0</b><span>后端与账号</span></li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src="images/hero.webp" width="1440" height="900" alt="My AI Rank 界面：五个档位中摆放着多个 AI 模型卡片">
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="kicker">01 / 功能</p>
+        <h2 id="features-title">打开就能用，排完就能发。</h2>
+        <p>不用注册，不用安装。所有操作都在一个页面里完成。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-num">DRAG</span>
+          <h3>拖拽分级</h3>
+          <p>把卡片拖进档位，同一档内也能拖动换位，周围卡片会平滑让位。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">MODELS / AGENTS</span>
+          <h3>两份榜单</h3>
+          <p>AI 模型和 AI Agent 各一份，切换互不影响。候选池按厂商筛选。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">CUSTOM</span>
+          <h3>自定义条目</h3>
+          <p>新模型刚发布、列表里还没有？自己加一张卡片，选好厂商就行。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">PNG</span>
+          <h3>导出与复制</h3>
+          <p>下载 PNG 或直接复制到剪贴板，图上带着你的名字和 X 账号。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split reverse" aria-labelledby="share-title">
+      <div class="split-copy">
+        <p class="kicker">02 / 分享</p>
+        <h2 id="share-title">一张图，说清你的偏好。</h2>
+        <p>榜单本来就是主观的。My AI Rank 只负责把你的判断排得好看，导出的图片和页面上看到的一模一样。</p>
+        <ul class="ticks">
+          <li>“夯 / 顶级 / 人上人 / NPC / 拉完了”五档，中英文界面一键切换</li>
+          <li>厂商图标自动匹配，几十个主流模型开箱即用</li>
+          <li>导出时自动隐藏编辑按钮，只留下榜单本身</li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src="images/board.webp" width="1295" height="551" alt="导出前的 AI 模型榜单特写" loading="lazy">
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="privacy-title">
+      <div class="section-head">
+        <p class="kicker">03 / 数据与隐私</p>
+        <h2 id="privacy-title">榜单只留在你的浏览器里。</h2>
+      </div>
+      <dl class="info-grid">
+        <div><dt>本地保存</dt><dd>榜单、自定义条目、名字和账号信息都存在浏览器 localStorage 中，刷新页面也不会丢。</dd></div>
+        <div><dt>不上传</dt><dd>没有后端服务，也没有账号系统，任何内容都不会发到服务器。</dd></div>
+        <div><dt>纯静态</dt><dd>原生 HTML、CSS 和 JavaScript，依赖随站点一起分发，国内网络也能正常加载。</dd></div>
+        <div><dt>主观声明</dt><dd>预设条目与分级仅为个人整理，不构成对任何模型或厂商的评价。</dd></div>
+      </dl>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <p class="kicker">04 / 开始使用</p>
+      <h2 id="cta-title">你心里的 S 级是哪个模型？</h2>
+      <p>花一分钟排出来，发给朋友看看他们同不同意。</p>
+      <div class="actions center">
+        <a class="btn btn-primary" href="https://airank.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">开始排榜 <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ai-rank" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="more"><span>更多作品</span><a href="../ai-signal/">AI Signal</a><a href="../aistat/">AIStat</a><a href="../listeninghub/">ListeningHub</a><a href="../snow-x-assistant/">Snow X Assistant</a></p>
+    <p><a href="../">雪瑜的作品集</a> · <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer">@xueyu1125</a> · <a href="https://github.com/Andrew-liu/ai-rank/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></p>
+  </footer>
+</body>
+</html>

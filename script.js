@@ -44,7 +44,7 @@ const translations = {
     description: '雪瑜的个人作品集：AI 产品、系统工程与技术写作。',
     skip: '跳到主要内容',
     navLabel: '主导航',
-    nav: ['项目', '博客', '关于', '联系'],
+    nav: ['项目', '博客', '联系'],
     languageLabel: '选择语言',
     homeLabel: '雪瑜首页',
     heroEyebrow: 'Backend engineer · AI builder',
@@ -59,7 +59,7 @@ const translations = {
     workKicker: 'Selected work',
     workTitle: '五个正在生长的产品',
     workIntro: '从每天的信息筛选，到本地设备上的 AI 开发体验。每个项目都从一个真实问题开始。',
-    projectLabels: ['访问 AI Signal', '访问 My AI Rank', '访问 AIStat GitHub 仓库', '访问 ListeningHub', '查看 Snow X Assistant 产品介绍'],
+projectLabels: ['查看 AI Signal 产品介绍', '查看 My AI Rank 产品介绍', '查看 AIStat 产品介绍', '查看 ListeningHub 产品介绍', '查看 Snow X Assistant 产品介绍'],
     signalTitle: ['从信息洪流中，', '识别真正的信号。'],
     signalIntro: '聚合过去 24 小时 AI 动态，合并重复报道，保留原始信源，把新闻流变成可判断的信号。',
     signalStats: ['STORIES SCANNED', 'TRUSTED SOURCES', 'SIGNAL CLUSTERS'],
@@ -77,14 +77,6 @@ const translations = {
     listeningIntro: '把双语字幕、纯听模式与词汇复习放进同一个学习闭环。',
     snowxTitle: '看清哪条推文正在起飞。',
     snowxIntro: '为 X 信息流标出推文流速、AI 腔指数与账号质量，附带视频下载和互关清理。标签只读页面已有数据，不额外请求接口。',
-    aboutKicker: 'About',
-    aboutTitle: ['工程是底色，', '好奇心是驱动。'],
-    aboutLead: '多年后端与系统开发经验，让我习惯从可靠性、性能和边界条件出发；现在，我把这套方法带进 AI 产品。',
-    aboutBody: '我关注 Agent 工作流、RAG、Coding Agent 和本地模型，也持续记录真实的部署过程与踩坑经验。我更喜欢先做出一个小而完整的闭环，再让它在使用中长大。',
-    skillsLabel: 'Technical skills',
-    principle: 'Working principle',
-    quote: ['“从真实问题出发，', '把复杂留在系统里。”'],
-    visitBlog: '访问个人博客',
     contactKicker: 'Contact',
     contactTitle: ['有值得做的事？', '一起聊聊。'],
     footer: 'Building useful things with code and curiosity.',
@@ -95,7 +87,7 @@ const translations = {
     description: '雪瑜’s portfolio: AI products, systems engineering, and technical writing.',
     skip: 'Skip to main content',
     navLabel: 'Primary navigation',
-    nav: ['Work', 'Blog', 'About', 'Contact'],
+    nav: ['Work', 'Blog', 'Contact'],
     languageLabel: 'Choose language',
     homeLabel: '雪瑜 home',
     heroEyebrow: 'Backend engineer · AI builder',
@@ -110,7 +102,7 @@ const translations = {
     workKicker: 'Selected work',
     workTitle: 'Five products in progress',
     workIntro: 'From daily information filtering to local AI development tools. Every project starts with a real problem.',
-    projectLabels: ['Visit AI Signal', 'Visit My AI Rank', 'Visit the AIStat GitHub repository', 'Visit ListeningHub', 'View the Snow X Assistant product page'],
+projectLabels: ['View the AI Signal product page', 'View the My AI Rank product page', 'View the AIStat product page', 'View the ListeningHub product page', 'View the Snow X Assistant product page'],
     signalTitle: ['Find the signal', 'inside the noise.'],
     signalIntro: 'AI updates from the past 24 hours, deduplicated and clustered with every original source preserved—turning a news stream into actionable intelligence.',
     signalStats: ['STORIES SCANNED', 'TRUSTED SOURCES', 'SIGNAL CLUSTERS'],
@@ -128,14 +120,6 @@ const translations = {
     listeningIntro: 'Bilingual subtitles, listening-only practice, and vocabulary review in one learning loop.',
     snowxTitle: 'Spot the posts taking off—at a glance.',
     snowxIntro: 'A Chrome extension that tags your X feed with view velocity, an AI-writing score, and account quality—plus video download and mutual-follow cleanup. Tags only read data the page already loaded.',
-    aboutKicker: 'About',
-    aboutTitle: ['Engineering is the foundation.', 'Curiosity is the engine.'],
-    aboutLead: 'Years of backend and systems work taught me to start with reliability, performance, and edge cases. Now I bring that discipline to AI products.',
-    aboutBody: 'I explore agent workflows, RAG, coding agents, and local models while documenting real deployment lessons. I prefer building a small, complete loop first, then letting it grow through use.',
-    skillsLabel: 'Technical skills',
-    principle: 'Working principle',
-    quote: ['“Start with a real problem.', 'Keep the complexity inside the system.”'],
-    visitBlog: 'Visit my blog',
     contactKicker: 'Contact',
     contactTitle: ['Working on something worthwhile?', 'Let’s talk.'],
     footer: 'Building useful things with code and curiosity.',
@@ -234,14 +218,6 @@ function applyLanguage(language, persist = true) {
   setText('.project-listening .project-copy > p:last-child', copy.listeningIntro);
   setText('.project-snowx .project-copy h3', copy.snowxTitle);
   setText('.project-snowx .project-copy > p:last-child', copy.snowxIntro);
-  setText('.about .section-kicker', copy.aboutKicker);
-  setHeading('#about-title', copy.aboutTitle, true);
-  setText('.about-lead', copy.aboutLead);
-  setText('.about-body > p:nth-of-type(2)', copy.aboutBody);
-  setAttribute('.skill-row', 'aria-label', copy.skillsLabel);
-  setText('.aside-label', copy.principle);
-  setHeading('.about-aside blockquote', copy.quote);
-  setDirectText('.about-aside .text-link', copy.visitBlog);
   setText('.contact .section-kicker', copy.contactKicker);
   setHeading('#contact-title', copy.contactTitle, true);
   setText('.site-footer > p', copy.footer);

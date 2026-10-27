@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AIStat：紧凑的 macOS 菜单栏仪表盘，集中查看 Codex 与 Claude 的额度、Token 成本、系统状态，并提供 Keep Awake 防睡眠。本地优先，开源免费。">
+  <meta name="theme-color" content="#0f1d28">
+  <title>AIStat — AI 用量与 Mac 状态，一眼掌握</title>
+  <link rel="icon" href="../assets/favicon.svg?v=4" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/product.css">
+</head>
+<body class="theme-aistat">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="bar">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> 雪瑜的作品集</a>
+    <a class="product" href="#top"><span class="product-dot" aria-hidden="true"></span><span>AIStat</span></a>
+    <a class="bar-link" href="https://github.com/Andrew-liu/AIStat" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">macOS 菜单栏应用 · SwiftUI · macOS 14+</p>
+        <h1 id="hero-title">AI 用量与 Mac 状态，<br><span>一眼掌握。</span></h1>
+        <p class="lead">把 Codex、Claude 的额度与成本、本机 CPU、内存、磁盘和电池，以及 Keep Awake 防睡眠开关，收进菜单栏里的一个面板。不用再在几个应用之间来回切换。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/Andrew-liu/AIStat/releases/latest" target="_blank" rel="noopener noreferrer">下载 DMG <span aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Andrew-liu/AIStat" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="facts" aria-label="项目特点">
+          <li><b>2</b><span>个 AI Provider</span></li>
+          <li><b>4</b><span>项系统指标</span></li>
+          <li><b>MIT</b><span>开源免费</span></li>
+        </ul>
+      </div>
+      <figure class="shot portrait">
+        <img src="images/dashboard.webp" width="838" height="1246" alt="AIStat 菜单栏面板：系统指标、Codex 成本与额度、Keep Awake 开关">
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="kicker">01 / 功能</p>
+        <h2 id="features-title">为长时间写代码的人准备的三件事。</h2>
+        <p>适合每天开着 Claude Code、Codex 跑任务的 macOS 开发者。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-num">AI USAGE</span>
+          <h3>AI 预算</h3>
+          <p>Codex 额度、Token 用量和成本概览；有本地数据源时同时显示 Claude 额度。刷新失败时沿用上一次成功的结果，不会突然变空白。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">SYSTEM</span>
+          <h3>系统状态</h3>
+          <p>CPU、内存、磁盘、电池四个环形指标，外加磁盘读写速度，点开可查看详情。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">KEEP AWAKE</span>
+          <h3>防睡眠</h3>
+          <p>15 分钟到永久七档可选，同时阻止空闲睡眠和屏幕变暗。菜单栏图标会跟着状态变化。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split reverse" aria-labelledby="source-title">
+      <div class="split-copy">
+        <p class="kicker">02 / 数据来源</p>
+        <h2 id="source-title">数据读得到，就读最准的那一份。</h2>
+        <p>每个 Provider 都有一条按顺序降级的读取链。窗口是 30 天就显示 30d，不会硬套成 5h 或 Week。</p>
+        <ul class="ticks">
+          <li>Codex：OAuth usage API → CLI RPC → 本地会话日志 → 上次缓存</li>
+          <li>Claude：OAuth 凭据文件 → Claude Code CLI → 上次缓存</li>
+          <li>默认不碰 Keychain，避免弹出系统密码提示</li>
+          <li>按指标模块化，方便以后接入更多 Provider</li>
+        </ul>
+      </div>
+      <dl class="info-grid">
+        <div><dt>系统指标</dt><dd>在本机直接读取。</dd></div>
+        <div><dt>Token 与成本</dt><dd>扫描本地 Codex 和 Claude Code 日志。</dd></div>
+        <div><dt>额度</dt><dd>请求 Provider 官方 usage 接口，这是唯一的网络访问。</dd></div>
+        <div><dt>后端</dt><dd>没有。数据不会上传到任何自定义服务器。</dd></div>
+      </dl>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="section-head">
+        <p class="kicker">03 / 安装</p>
+        <h2 id="install-title">下载、拖入、打开。</h2>
+        <p>需要 macOS 14 或更新版本。想自己构建的话，用 Xcode 打开工程即可运行。</p>
+      </div>
+      <ol class="steps">
+        <li><b>下载</b><span>从 <a href="https://github.com/Andrew-liu/AIStat/releases/latest" target="_blank" rel="noopener noreferrer">GitHub Releases</a> 下载最新的 <code>.dmg</code>。</span></li>
+        <li><b>安装</b><span>把 <code>AIStat.app</code> 拖进“应用程序”文件夹。</span></li>
+        <li><b>首次打开</b><span>右键点击应用，选择“打开”，绕过 Gatekeeper 提示。</span></li>
+      </ol>
+      <p class="note">DMG 目前还没有经过 Apple 公证，所以首次启动需要右键打开。之后正常双击即可。</p>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <p class="kicker">04 / 开始使用</p>
+      <h2 id="cta-title">让 AI 预算和 Mac 状态待在菜单栏里。</h2>
+      <div class="actions center">
+        <a class="btn btn-primary" href="https://github.com/Andrew-liu/AIStat/releases/latest" target="_blank" rel="noopener noreferrer">下载 DMG <span aria-hidden="true">↓</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Andrew-liu/AIStat/issues" target="_blank" rel="noopener noreferrer">反馈问题 <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="more"><span>更多作品</span><a href="../ai-signal/">AI Signal</a><a href="../ai-rank/">My AI Rank</a><a href="../listeninghub/">ListeningHub</a><a href="../snow-x-assistant/">Snow X Assistant</a></p>
+    <p><a href="../">雪瑜的作品集</a> · <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer">@xueyu1125</a> · <a href="https://github.com/Andrew-liu/AIStat/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI Signal：面向中文 AI 从业者的开源资讯聚合站。自动采集、去重、合并同一事件并保留原始信源，每小时更新。">
+  <meta name="theme-color" content="#f5f0e6">
+  <title>AI Signal — 从信息洪流中识别真正的信号</title>
+  <link rel="icon" href="../assets/favicon.svg?v=4" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/product.css">
+</head>
+<body class="theme-signal">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="bar">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> 雪瑜的作品集</a>
+    <a class="product" href="#top"><span class="product-dot" aria-hidden="true"></span><span>AI Signal</span></a>
+    <a class="bar-link" href="https://github.com/Andrew-liu/ai-signal" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AI 资讯聚合 · 开源 · 每小时更新</p>
+        <h1 id="hero-title">从信息洪流中，<br><span>识别真正的信号。</span></h1>
+        <p class="lead">自动采集官方博客、技术媒体、RSS 和开发者社区，过滤出与 AI 强相关的内容，把重复报道合并成同一事件，并保留每一个原始信源。</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://news.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">打开 AI Signal <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ai-signal" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </div>
+        <ul class="facts" aria-label="项目特点">
+          <li><b>24h</b><span>滚动时间窗</span></li>
+          <li><b>6</b><span>个赛道分栏</span></li>
+          <li><b>MIT</b><span>开源，纯静态部署</span></li>
+        </ul>
+      </div>
+      <figure class="shot">
+        <img src="images/hero.webp" width="1440" height="900" alt="AI Signal 赛道看板：报纸头版风格，按模型、开发工具、开源等赛道列出 AI 动态">
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="features-title">
+      <div class="section-head">
+        <p class="kicker">01 / 功能</p>
+        <h2 id="features-title">不是又一个新闻流，而是一张信号表。</h2>
+        <p>同一件事被十家媒体转载，在这里只出现一次，后面挂着全部来源。你可以先看结论，再决定点开哪一篇原文。</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="feature-num">EVENTS</span>
+          <h3>同事件合并</h3>
+          <p>把重复报道聚成一个事件，标出独立来源数，展开即可看到每一条原始报道。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">RANKING</span>
+          <h3>重要性排序</h3>
+          <p>按来源等级、独立来源数和时效打分，热榜与最新两种视角，排序本身不依赖大模型。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">FILTER</span>
+          <h3>可解释的 AI 过滤</h3>
+          <p>用可读的规则判断内容与 AI 的相关度，误伤和漏网都能追溯到具体规则。</p>
+        </article>
+        <article class="feature">
+          <span class="feature-num">CHINESE</span>
+          <h3>中文优先</h3>
+          <p>生成中文标题、短摘要和推荐理由，英文原标题保留在下方，方便对照。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" aria-labelledby="board-title">
+      <figure class="shot">
+        <img src="images/feed.webp" width="1440" height="1800" alt="AI Signal 赛道看板长图" loading="lazy">
+      </figure>
+      <div class="split-copy">
+        <p class="kicker">02 / 阅读体验</p>
+        <h2 id="board-title">像读一份报纸头版。</h2>
+        <p>按模型研究、开发工具与 Agent、开源与 GitHub、芯片与机器人、融资与财报、安全与产品六个赛道分栏，每个赛道都能切换全部、热门和最新。</p>
+        <ul class="ticks">
+          <li>每条都标出来源等级、发布时间和独立来源数</li>
+          <li>热度分数可视化，一眼看出谁在升温</li>
+          <li>多套阅读主题，长时间看也不累</li>
+          <li>只展示标题、摘要和原文链接，不搬运全文</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="pipeline-title">
+      <div class="section-head">
+        <p class="kicker">03 / 工作原理</p>
+        <h2 id="pipeline-title">一条每小时运行一次的管线。</h2>
+        <p>Python 管线跑在 GitHub Actions 上，产出静态 JSON，再由纯静态前端读取。没有服务器，也没有数据库。</p>
+      </div>
+      <ol class="pipeline">
+        <li><b>采集</b><span>官方博客、AI 媒体、RSS/OPML、Hacker News、GitHub</span></li>
+        <li><b>标准化</b><span>统一字段、清洗标题与时间</span></li>
+        <li><b>过滤增强</b><span>AI 相关性评分，生成中文标题与摘要</span></li>
+        <li><b>聚类排序</b><span>去重、合并同一事件、计算重要性</span></li>
+        <li><b>门禁发布</b><span>测试、脱敏、质量检查通过后才部署</span></li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="trust-title">
+      <div class="section-head">
+        <p class="kicker">04 / 可信度</p>
+        <h2 id="trust-title">把“为什么出现在这里”讲清楚。</h2>
+      </div>
+      <dl class="info-grid">
+        <div><dt>保留信源</dt><dd>每个事件都附带全部原始链接和来源名称，结论可以回到原文核对。</dd></div>
+        <div><dt>质量门禁</dt><dd>候选数据先过测试、脱敏和质量门禁，数据过期或异常时不会发布。</dd></div>
+        <div><dt>来源健康</dt><dd>站内展示各信源的健康状态、AI 内容占比和采集异常，问题不会被悄悄藏起来。</dd></div>
+        <div><dt>版权边界</dt><dd>第三方内容版权归原作者，站点只展示必要摘要与原文链接。</dd></div>
+      </dl>
+    </section>
+
+    <section class="section cta" aria-labelledby="cta-title">
+      <p class="kicker">05 / 开始使用</p>
+      <h2 id="cta-title">每天花五分钟，跟上 AI 圈发生的事。</h2>
+      <p>直接打开网页即可，不需要注册。也可以 Fork 仓库，换成你自己的信息源。</p>
+      <div class="actions center">
+        <a class="btn btn-primary" href="https://news.dinosaurliu.com/" target="_blank" rel="noopener noreferrer">打开 AI Signal <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Andrew-liu/ai-signal" target="_blank" rel="noopener noreferrer">在 GitHub 上 Fork <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="more"><span>更多作品</span><a href="../ai-rank/">My AI Rank</a><a href="../aistat/">AIStat</a><a href="../listeninghub/">ListeningHub</a><a href="../snow-x-assistant/">Snow X Assistant</a></p>
+    <p><a href="../">雪瑜的作品集</a> · <a href="https://x.com/xueyu1125" target="_blank" rel="noopener noreferrer">@xueyu1125</a> · <a href="https://github.com/Andrew-liu/ai-signal/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></p>
+  </footer>
+</body>
+</html>
