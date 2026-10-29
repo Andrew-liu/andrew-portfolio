@@ -481,7 +481,34 @@ html[lang="en"] .contact h2 { font-family: "Aptos Display", "Segoe UI Variable D
 .tweet-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; padding-top: 10px; border-top: 1px solid #2f3336; color: #71767b; font: 600 8px/1 var(--mono); letter-spacing: .05em; }
 @keyframes snowx-glow { to { box-shadow: 0 0 24px rgb(244 33 46 / .8); } }
 
-.project-github { --card-accent: #3ddc84; }
+.project-xmemory { --card-accent: #e0674c; }
+.xmem-paper { width: 82%; padding: 13px 14px 14px; border: 1px solid #e8e3d9; border-radius: 12px; color: #2e4a62; background: #fbfaf7; box-shadow: 0 20px 50px rgb(0 0 0 / .45); transform: rotate(1.2deg); transition: transform .35s ease; }
+.project-xmemory:hover .xmem-paper { transform: rotate(0) translateY(-4px); }
+.xmem-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 9px; border-bottom: 1px solid #ebe6dc; }
+.xmem-logo { display: inline-flex; align-items: center; gap: 6px; color: #2b2a28; font: 700 9px/1 var(--mono); letter-spacing: .14em; }
+.xmem-logo i { width: 7px; height: 7px; border-radius: 50%; background: #b8412c; }
+.xmem-tabs { display: flex; gap: 10px; color: #8e8a82; font: 600 9px/1 "Noto Serif SC", "Songti SC", "SimSun", serif; }
+.xmem-tabs b { color: #2b2a28; }
+.xmem-tabs b::after { content: ""; display: inline-block; width: 4px; height: 4px; margin-left: 3px; vertical-align: 2px; border-radius: 50%; background: #b8412c; }
+.xmem-title { margin: 10px 0 9px; color: #2b2a28; font: 700 15px/1.2 "Noto Serif SC", "Songti SC", "SimSun", serif; letter-spacing: .1em; }
+.xmem-week { display: grid; grid-template-columns: 1fr 1fr 2.6fr 1fr 1fr 1fr; border: 1px solid #ebe6dc; border-radius: 4px; }
+.xmem-day { min-width: 0; min-height: 96px; padding: 7px 6px; border-left: 1px solid #ebe6dc; }
+.xmem-day:first-child { border-left: 0; }
+.xmem-day small { color: #8e8a82; font-size: 7px; }
+.xmem-day b { display: block; margin: 2px 0 8px; color: #2b2a28; font: 400 13px/1 "Noto Serif SC", "Songti SC", "SimSun", serif; }
+.xmem-day em { display: block; width: var(--w); height: 5px; margin-top: 5px; border-radius: 3px; background: #e6e1d6; }
+.xmem-day.is-today b { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-left: 4px; border-radius: 50%; color: white; background: #2e4a62; font-size: 10px; }
+.xmem-day.is-today { box-shadow: inset 0 -2px 0 #b8412c; }
+.xmem-day ul { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.xmem-day li { position: relative; overflow: hidden; padding: 3px 4px 3px 15px; border-left: 2px solid #2e4a62; color: #2b2a28; font-size: 8.5px; line-height: 1.3; white-space: nowrap; text-overflow: ellipsis; }
+.xmem-day li::before { content: ""; position: absolute; left: 4px; top: 50%; width: 6px; height: 6px; border: 1px solid #8e8a82; border-radius: 1px; transform: translateY(-50%); }
+.xmem-day li.is-done { color: #a29d94; text-decoration: line-through; }
+.xmem-day li.is-done::before { border-color: #b8412c; background: #b8412c; }
+
+.project-github { --card-accent: #3ddc84; grid-column: 1 / -1; flex-direction: row; }
+.project-github .project-preview { flex: 0 0 58%; aspect-ratio: 16 / 7; }
+.project-github .project-copy { justify-content: center; padding: 20px clamp(16px, 3vw, 40px); }
+.project-github .project-foot { margin-top: 0; }
 .github-preview { width: 84%; padding: 14px; border: 1px solid var(--line-strong); border-radius: 14px; background: rgb(13 17 23 / .88); box-shadow: 0 20px 50px rgb(0 0 0 / .45); transition: transform .35s ease; }
 .project-github:hover .github-preview { transform: translateY(-4px); }
 .github-head, .github-legend { display: flex; align-items: center; color: #7d8590; font: 650 8px/1 var(--mono); letter-spacing: .08em; }
@@ -576,6 +603,10 @@ html[lang="en"] .contact h2 { font-family: "Aptos Display", "Segoe UI Variable D
   .site-header { grid-template-columns: 1fr auto; }
   .main-nav { display: none; }
   .project-grid { grid-template-columns: 1fr; }
+  .project-github { flex-direction: column; }
+  .project-github .project-preview { flex: none; aspect-ratio: 16 / 10; }
+  .project-github .project-copy { padding: 20px 12px 10px; }
+  .project-github .project-foot { margin-top: auto; }
   .hero h1 { font-size: clamp(32px, 10vw, 62px); }
 }
 
@@ -598,6 +629,11 @@ html[lang="en"] .contact h2 { font-family: "Aptos Display", "Segoe UI Variable D
   .aistat-preview { width: 84%; grid-template-columns: 76px 1fr; }
   .usage-ring { width: 72px; height: 72px; }
   .snowx-tweet { width: 88%; padding: 12px; }
+  .xmem-paper { width: 90%; padding: 10px; }
+  .xmem-week { grid-template-columns: 1fr 2.8fr 1fr; }
+  .xmem-day:nth-child(1), .xmem-day:nth-child(n+5) { display: none; }
+  .xmem-day:nth-child(2) { border-left: 0; }
+  .xmem-day { min-height: 80px; }
   .tweet-lines, .tweet-actions span:nth-child(n+3) { display: none; }
   .contact { gap: 40px; }
   .contact-links { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 320px; }

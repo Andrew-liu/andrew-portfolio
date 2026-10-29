@@ -29,6 +29,7 @@
 | AIStat | 在 macOS 菜单栏集中查看 AI 用量与设备状态 | [产品介绍](https://www.dinosaurliu.com/aistat/) · [GitHub](https://github.com/Andrew-liu/AIStat) |
 | ListeningHub | 将听力练习、双语字幕与词汇复习连接成学习闭环 | [产品介绍](https://www.dinosaurliu.com/listeninghub/) · [在线使用](https://eng.dinosaurliu.com/) |
 | Snow X Assistant | 为 X 信息流标出推文流速、AI 腔指数与账号质量的 Chrome 扩展 | [产品介绍](https://www.dinosaurliu.com/snow-x-assistant/) |
+| XMemory | 本地优先的桌面写作工作区，串起灵感、X 书签记忆与长文选题 | [产品介绍](https://www.dinosaurliu.com/xmemory/) · [GitHub](https://github.com/Andrew-liu/XMemory) |
 
 ## 个人主页
 
