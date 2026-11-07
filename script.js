@@ -57,28 +57,34 @@ if (heatmap) {
   heatmap.appendChild(fragment);
 }
 
-// Pixel-matrix hero title, same method as the reference site:
-// rasterise each line with the 12px Fusion Pixel font, then redraw every lit pixel as a square.
+// Sample a familiar letterform at 24px before drawing the square-pixel title.
+// More source detail keeps lowercase counters and descenders legible.
 const pixelTitle = document.querySelector('.hero-title');
-if (pixelTitle && document.fonts) {
-  const MATRIX_FONT = '12px "Fusion Pixel 12px Proportional SC"';
+if (pixelTitle) {
+  const MATRIX_FONT = '700 24px Arial, sans-serif';
+  const LETTER_GAP = 1;
   const lines = [...pixelTitle.querySelectorAll('.hero-title-line')];
   const rasterise = (text) => {
     const probe = document.createElement('canvas');
     const ctx = probe.getContext('2d');
     ctx.font = MATRIX_FONT;
-    probe.width = Math.ceil(ctx.measureText(text).width) + 8;
-    probe.height = 24;
+    const advances = [...text].map((character) => Math.ceil(ctx.measureText(character).width) + LETTER_GAP);
+    probe.width = advances.reduce((sum, advance) => sum + advance, 0) + 8;
+    probe.height = 40;
     ctx.fillStyle = '#fff';
     ctx.font = MATRIX_FONT;
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(text, 4, 18);
+    let cursor = 4;
+    [...text].forEach((character, index) => {
+      ctx.fillText(character, cursor, 28);
+      cursor += advances[index];
+    });
     const data = ctx.getImageData(0, 0, probe.width, probe.height).data;
     const pixels = [];
     let minX = probe.width, maxX = -1, minY = probe.height, maxY = -1;
     for (let y = 0; y < probe.height; y += 1) {
       for (let x = 0; x < probe.width; x += 1) {
-        if (data[(y * probe.width + x) * 4 + 3] < 96) continue;
+        if (data[(y * probe.width + x) * 4 + 3] < 128) continue;
         pixels.push([x, y]);
         minX = Math.min(minX, x); maxX = Math.max(maxX, x);
         minY = Math.min(minY, y); maxY = Math.max(maxY, y);
@@ -87,31 +93,29 @@ if (pixelTitle && document.fonts) {
     if (maxX < minX) return { columns: 0, rows: 0, pixels: [] };
     return { columns: maxX - minX + 1, rows: maxY - minY + 1, pixels: pixels.map(([x, y]) => [x - minX, y - minY]) };
   };
-  let lastWidth = -1;
-  let shapes = null;
-  const render = async () => {
-    try { await document.fonts.load(MATRIX_FONT); } catch { return; }
-    if (!document.fonts.check(MATRIX_FONT)) return;
+  let lastLayout = '';
+  const shapes = lines.map((canvas) => rasterise(canvas.dataset.text));
+  const render = () => {
     const boxWidth = Math.floor(pixelTitle.getBoundingClientRect().width);
-    if (boxWidth <= 0 || boxWidth === lastWidth) return;
-    lastWidth = boxWidth;
-    shapes ||= lines.map((canvas) => rasterise(canvas.dataset.text));
-    const maxColumns = Math.max(...shapes.map((shape) => shape.columns));
-    const fontSize = Number.parseFloat(getComputedStyle(pixelTitle).fontSize);
-    const unit = Math.min(Math.max(2, Math.round(fontSize / 12)), Math.max(2, Math.floor((boxWidth + 1) / maxColumns)));
-    const gap = unit >= 6 ? 2 : 1;
-    const dot = Math.max(1, unit - gap);
     const dpr = window.devicePixelRatio || 1;
+    const fontSize = Number.parseFloat(getComputedStyle(pixelTitle).fontSize);
+    const layout = `${boxWidth}:${fontSize}:${dpr}`;
+    if (boxWidth <= 0 || layout === lastLayout) return;
+    lastLayout = layout;
+    const maxColumns = Math.max(...shapes.map((shape) => shape.columns));
+    // Work in device pixels so zoom and high-density screens cannot blur the grid.
+    const unit = Math.max(1, Math.floor(Math.min(fontSize / 20, boxWidth / maxColumns) * dpr));
+    const gap = unit >= 3 ? Math.max(1, Math.round(unit * .18)) : 0;
+    const dot = unit - gap;
     shapes.forEach((shape, index) => {
       const canvas = lines[index];
       const w = shape.columns * unit - gap;
       const h = shape.rows * unit - gap;
-      canvas.width = Math.max(1, Math.round(w * dpr));
-      canvas.height = Math.max(1, Math.round(h * dpr));
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
+      canvas.width = w;
+      canvas.height = h;
+      canvas.style.width = `${w / dpr}px`;
+      canvas.style.height = `${h / dpr}px`;
       const ctx = canvas.getContext('2d');
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = canvas.dataset.accent ? '#ff9fda' : '#fff';
       shape.pixels.forEach(([x, y]) => ctx.fillRect(x * unit, y * unit, dot, dot));
@@ -119,6 +123,7 @@ if (pixelTitle && document.fonts) {
     pixelTitle.classList.add('is-pixel');
   };
   render();
+  if ('ResizeObserver' in window) new ResizeObserver(render).observe(pixelTitle);
   window.addEventListener('resize', render);
 }
 

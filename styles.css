@@ -233,20 +233,20 @@ main { width: min(100%, var(--max)); margin-inline: auto; padding-inline: var(--
 .hero-name { margin: clamp(22px, 4vh, 42px) 0 0; color: #3b203a; font: 500 clamp(20px, 2.35vw, 28px)/1.2 var(--name-font); letter-spacing: .18em; padding-left: .18em; text-shadow: 0 1px 0 #ffffff6b, 0 3px 16px #ffeef93d; }
 .hero h1 {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: clamp(4px, .7vw, 8px);
   min-height: 1.9em;
   margin: 18px 0 0;
   color: #fff;
-  font-family: var(--matrix);
+  font-family: Arial, var(--display);
   font-size: clamp(36px, 6.65vw, 84px);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.1;
-  -webkit-font-smoothing: none;
   filter: drop-shadow(0 2px 12px rgb(20 8 18 / .45));
 }
-.hero h1 span { color: #ff9fda; }
+.hero-title-text > span { color: #ff9fda; }
 .hero-title-line { display: none; max-width: 100%; image-rendering: pixelated; }
 .hero h1.is-pixel .hero-title-line { display: block; }
 .hero h1.is-pixel .hero-title-text { display: none; }
