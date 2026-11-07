@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>粉丝庆祝生成器 — 雪瑜工具集</title>
+  <meta name="description" content="输入粉丝数，自定义文案，生成点阵数字与烟花庆祝视频，支持导出 MP4 和 PNG。">
+  <link rel="icon" href="../../assets/favicon.svg?v=4" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #070707;
+      --panel: #10100f;
+      --line: #2b2b28;
+      --paper: #e8e4d8;
+      --muted: #87857c;
+      --amber: #e5ad58;
+      --amber-soft: #563b1d;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px) 0 0 / 72px 72px,
+        linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px) 0 0 / 72px 72px,
+        #0a0a09;
+      font-family: "Microsoft YaHei UI", "PingFang SC", sans-serif;
+    }
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 36px 0 52px;
+    }
+    header { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    h1 {
+      margin: 0;
+      font: 500 clamp(25px, 3vw, 40px)/1 "Arial Narrow", "Microsoft YaHei UI", sans-serif;
+      letter-spacing: -.03em;
+    }
+    .eyebrow { margin: 0 0 9px; color: var(--amber); font: 11px/1 Consolas, monospace; letter-spacing: .22em; }
+    .back-links { display: flex; gap: 22px; margin-bottom: 28px; }
+    .back-links a { color: var(--muted); text-decoration: none; font-size: 12px; }
+    .back-links a:hover { color: var(--paper); }
+    .back-links a:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+    .hint { margin: 0; max-width: 390px; color: var(--muted); font-size: 12px; line-height: 1.7; text-align: right; }
+    main { display: grid; grid-template-columns: 300px 1fr; gap: 18px; align-items: start; }
+    .controls, .stage { border: 1px solid var(--line); background: rgba(16,16,15,.94); }
+    .controls { padding: 20px; }
+    .section-label { margin: 0 0 18px; color: #aaa79d; font: 10px/1 Consolas, monospace; letter-spacing: .18em; }
+    label { display: block; margin: 0 0 16px; color: #aaa79d; font-size: 11px; }
+    input {
+      width: 100%; margin-top: 7px; padding: 10px 11px;
+      color: var(--paper); background: #080808; border: 1px solid #343431; border-radius: 0;
+      outline: none; font: 13px/1.2 Consolas, monospace;
+    }
+    input:focus { border-color: var(--amber); box-shadow: 0 0 0 2px rgba(229,173,88,.13); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .actions { display: grid; gap: 9px; margin-top: 20px; }
+    button {
+      min-height: 42px; padding: 0 14px; border: 1px solid #45443f; border-radius: 0;
+      color: #dedad0; background: transparent; cursor: pointer; font: 600 11px/1 Consolas, monospace;
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    button.primary { color: #16120b; border-color: var(--amber); background: var(--amber); }
+    button:hover { filter: brightness(1.1); }
+    button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    button:disabled { opacity: .45; cursor: wait; }
+    .status { min-height: 18px; margin: 12px 0 0; color: var(--muted); font: 10px/1.5 Consolas, monospace; }
+    .stage { position: relative; padding: 16px; overflow: hidden; }
+    .stage::before {
+      content: "LIVE RENDER / 1112×588 / 2X"; display: block; margin: 0 0 12px;
+      color: #69675f; font: 9px/1 Consolas, monospace; letter-spacing: .16em;
+    }
+    .canvas-wrap { position: relative; background: #000; border: 1px solid #232321; }
+    canvas { display: block; width: 100%; height: auto; aspect-ratio: 556 / 294; background: #050505; }
+    .playhead { display: grid; grid-template-columns: 48px 1fr 48px; gap: 9px; align-items: center; margin-top: 13px; }
+    .time { color: #858279; font: 10px Consolas, monospace; }
+    .time:last-child { text-align: right; }
+    input[type="range"] { margin: 0; padding: 0; height: 2px; border: 0; accent-color: var(--amber); }
+    .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .note { min-height: 78px; padding: 12px; border-top: 1px solid #302f2c; color: #858279; font-size: 11px; line-height: 1.6; }
+    .note b { display: block; margin-bottom: 4px; color: #c4c0b5; font: 10px Consolas, monospace; letter-spacing: .08em; }
+    @media (max-width: 860px) {
+      header { align-items: start; flex-direction: column; }
+      .hint { text-align: left; }
+      main { grid-template-columns: 1fr; }
+      .controls { order: 2; }
+    }
+    @media (max-width: 560px) { .notes { grid-template-columns: 1fr; } .shell { width: min(100% - 20px, 1180px); } }
+    @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="back-links" aria-label="返回导航"><a href="../">← 工具集</a><a href="../../">雪瑜主页</a></nav>
+    <header>
+      <div>
+        <p class="eyebrow">DOT MATRIX / VALUE REVEAL</p>
+        <h1>粉丝庆祝生成器</h1>
+      </div>
+      <p class="hint">数字聚合后清晰定格，再以金色与彩色烟花庆祝。保持原片比例，以 1112 × 588 双倍像素输出，Chrome 可直接导出 MP4。</p>
+    </header>
+    <main>
+      <section class="controls" aria-label="参数设置">
+        <p class="section-label">PARAMETERS</p>
+        <label>左上角主标题<input id="title" value="雪瑜" maxlength="28" /></label>
+        <label>左上角副标题<input id="subtitle" value="https://x.com/xueyu1125" maxlength="48" /></label>
+        <label>目标数值<input id="target" type="number" value="10000" min="0" max="999999999" step="1" /></label>
+        <div class="row">
+          <label>小数位数<input id="decimals" type="number" value="0" min="0" max="2" step="1" /></label>
+          <label>动画时长/秒<input id="duration" type="number" value="10" min="2" max="20" step="0.1" /></label>
+        </div>
+        <label>数字下方文字<input id="milestone" value="FOLLOWERS" maxlength="36" /></label>
+        <div class="actions">
+          <button id="play" class="primary">▶ 播放特效</button>
+          <button id="record">↓ 导出 MP4（Chrome）</button>
+          <button id="saveFrame">↓ 保存当前帧 PNG</button>
+        </div>
+        <p id="status" class="status">READY</p>
+      </section>
+      <section class="stage">
+        <div class="canvas-wrap"><canvas id="canvas" width="1112" height="588"></canvas></div>
+        <div class="playhead">
+          <span id="now" class="time">0.00</span>
+          <input id="scrub" type="range" min="0" max="1" value="0" step="0.001" aria-label="时间轴" />
+          <span id="end" class="time">10.00</span>
+        </div>
+        <div class="notes">
+          <div class="note"><b>01 / SCATTER</b>随机暗灯与三组高亮能量团块横向扫过。</div>
+          <div class="note"><b>02 / RESOLVE</b>数字递增至目标值，随后放大为清晰、明亮的完整数字。</div>
+          <div class="note"><b>03 / CELEBRATE</b>数字定格后烟花依次绽放；数字始终位于前景，清晰可读。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="./vendor/mp4-muxer.js"></script>
+  <script>
+    const canvas = document.querySelector('#canvas');
+    const ctx = canvas.getContext('2d');
+    const $ = (s) => document.querySelector(s);
+    const inputs = ['title','subtitle','target','decimals','duration','milestone'].map(id => $('#'+id));
+    const W = 556, H = 294, OUTPUT_SCALE = 2, OUTPUT_W = W * OUTPUT_SCALE, OUTPUT_H = H * OUTPUT_SCALE;
+    const COLS = 58, ROWS = 7, CELL = 7, GAP = 2;
+    const GRID_X = 17, GRID_Y = 113, STRIDE = CELL + GAP;
+    const digits = {
+      '0':['11111','10001','10011','10101','11001','10001','11111'],
+      '1':['00100','01100','00100','00100','00100','00100','01110'],
+      '2':['11111','00001','00001','11111','10000','10000','11111'],
+      '3':['11111','00001','00001','01111','00001','00001','11111'],
+      '4':['10001','10001','10001','11111','00001','00001','00001'],
+      '5':['11111','10000','10000','11111','00001','00001','11111'],
+      '6':['11111','10000','10000','11111','10001','10001','11111'],
+      '7':['11111','00001','00010','00100','01000','01000','01000'],
+      '8':['11111','10001','10001','11111','10001','10001','11111'],
+      '9':['11111','10001','10001','11111','00001','00001','11111'],
+      ',':['0','0','0','0','0','1','1'], '.':['0','0','0','0','0','0','1'], '-':['0','0','0','111','0','0','0']
+    };
+    const FPS = 24;
+    let raf = 0, playing = false, startAt = 0, currentT = 0, recorder = null, exporting = false;
+
+    function hash(n) { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+    function clamp(v,a,b) { return Math.max(a,Math.min(b,v)); }
+    function smoothstep(t) { t=clamp(t,0,1); return t*t*(3-2*t); }
+    function easeInOutCubic(t) { return t < .5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+    function config() {
+      return {
+        title: $('#title').value || 'UNTITLED', subtitle: $('#subtitle').value,
+        target: clamp(Number($('#target').value)||0,0,999999999),
+        decimals: clamp(Number($('#decimals').value)||0,0,2),
+        duration: clamp(Number($('#duration').value)||10,2,20),
+        milestone: $('#milestone').value
+      };
+    }
+    function formatValue(v, decimals) { return v.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals}); }
+    function bitmapFor(text) {
+      const widths = [...text].map(ch => (digits[ch]||digits['0'])[0].length);
+      const total = widths.reduce((a,b)=>a+b,0) + Math.max(0,text.length-1);
+      const bits = Array.from({length:ROWS},()=>Array(total).fill(false));
+      let x=0;
+      [...text].forEach((ch,i)=>{
+        const p=digits[ch]||digits['0'];
+        for(let y=0;y<ROWS;y++) for(let j=0;j<p[y].length;j++) if(p[y][j]==='1') bits[y][x+j]=true;
+        x += p[0].length + (i<text.length-1?1:0);
+      });
+      return bits;
+    }
+    function roundRect(x,y,w,h,r) {
+      ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill();
+    }
+    function draw(t) {
+      const c=config(), dur=c.duration, p=clamp(t/dur,0,1), resolveStart=.20, resolveEnd=.58;
+      ctx.setTransform(OUTPUT_SCALE,0,0,OUTPUT_SCALE,0,0);
+      ctx.imageSmoothingEnabled=false;
+      ctx.textRendering='geometricPrecision';
+      ctx.fillStyle='#050505'; ctx.fillRect(0,0,W,H);
+      const vignette=ctx.createRadialGradient(W*.5,H*.45,30,W*.5,H*.45,340);
+      vignette.addColorStop(0,'rgba(28,28,26,.14)'); vignette.addColorStop(1,'rgba(0,0,0,.55)');
+      ctx.fillStyle=vignette; ctx.fillRect(0,0,W,H);
+      ctx.textBaseline='alphabetic';
+      ctx.fillStyle='#fffef9'; ctx.font='700 17px Consolas, "Lucida Console", monospace';
+      ctx.fillText(c.title.toUpperCase(),17,34);
+      ctx.fillStyle='#c4c1b8'; ctx.font='600 10px Consolas, "Lucida Console", monospace'; ctx.fillText(c.subtitle,17,57);
+      ctx.fillStyle='#45443f'; ctx.fillRect(17,39,524,1);
+      const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      ctx.font='6px Consolas, monospace'; ctx.fillStyle='#4e4d48';
+      months.forEach((m,i)=>ctx.fillText(m,17+i*44,108));
+      const rp=clamp((p-resolveStart)/(resolveEnd-resolveStart),0,1);
+      const value = rp>=1 ? c.target : c.target*easeInOutCubic(rp);
+      const display = formatValue(value,c.decimals);
+      const bitmap=bitmapFor(display);
+      const textWidth=bitmap[0].length;
+      const startCol=Math.max(0,Math.floor((COLS-textWidth)/2));
+      const gridFade=1-smoothstep((p-.58)/.07)*.90;
+      ctx.save(); ctx.globalAlpha=gridFade;
+      for(let y=0;y<ROWS;y++) for(let x=0;x<COLS;x++) {
+        const tx=x-startCol;
+        const on=tx>=0 && tx<textWidth && bitmap[y][tx];
+        const noise=hash(x*17+y*71+Math.floor(t*24)*131);
+        const wave1=Math.exp(-Math.pow((x-(8+p*70))/4.5,2));
+        const wave2=Math.exp(-Math.pow((x-(25+p*42))/5.5,2));
+        const wave3=Math.exp(-Math.pow((x-(44+p*21))/4.0,2));
+        const scatter=(.11+.55*Math.max(wave1,wave2,wave3))*(1-smoothstep(rp));
+        const ghost = noise < scatter;
+        let alpha=.11 + noise*.06;
+        let color=`rgba(80,80,75,${alpha})`;
+        if(ghost) { const hot=noise < scatter*.42; color=hot?'rgba(242,240,231,.88)':'rgba(126,125,118,.52)'; }
+        if(on && rp>.02) {
+          const settle=clamp(rp*1.35,0,1);
+          const amber=false;
+          const flick=amber ? .72+.28*hash(x*31+y*11+Math.floor(t*18)) : 1;
+          color=amber?`rgba(237,177,87,${settle*flick})`:`rgba(241,239,231,${settle*(.84+.16*noise)})`;
+        }
+        ctx.fillStyle=color; roundRect(GRID_X+x*STRIDE,GRID_Y+y*STRIDE,CELL,CELL,1.35);
+      }
+      ctx.restore();
+      ctx.fillStyle='#55534d'; ctx.font='6px Consolas, monospace';
+      ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach((d,i)=>ctx.fillText(d,1,119+i*9));
+      ctx.fillText('Less',446,201); ctx.fillText('More',524,201);
+      ['#33332f','#5b5a54','#88867d','#c8c5b8','#f0eee6'].forEach((v,i)=>{ctx.fillStyle=v; roundRect(475+i*6,196,5,5,1)});
+      const timer=Math.max(2,Math.round(10-p*8));
+      ctx.fillStyle='#eceae3'; ctx.font='11px Consolas, monospace'; ctx.fillText(`0:${String(timer).padStart(2,'0')}`,17,275);
+      ctx.save();
+      ctx.fillStyle='#f0eee7'; ctx.font='700 10px Consolas, "Lucida Console", monospace';
+      ctx.textAlign='right'; ctx.fillText('thank you',541,275); ctx.restore();
+      ctx.fillStyle='#292926'; ctx.fillRect(17,258,524,1);
+      ctx.fillStyle='#f0eee6'; ctx.fillRect(17,258,524*p,1);
+      if(p>=.58) {
+        drawFireworks(p,c.duration);
+        const reveal=smoothstep((p-.58)/.065);
+        ctx.save();
+        ctx.globalAlpha=reveal;
+        const backdrop=ctx.createRadialGradient(W/2,151,40,W/2,151,228);
+        backdrop.addColorStop(0,'rgba(5,5,5,.96)');
+        backdrop.addColorStop(.45,'rgba(5,5,5,.40)');
+        backdrop.addColorStop(.72,'rgba(5,5,5,.06)');
+        backdrop.addColorStop(1,'rgba(5,5,5,0)');
+        ctx.fillStyle=backdrop; ctx.fillRect(0,72,W,174);
+        ctx.translate(W/2,150); const scale=.94+.06*reveal; ctx.scale(scale,scale);
+        const finalText=formatValue(c.target,c.decimals);
+        let size=76; ctx.font=`700 ${size}px Consolas, 'Microsoft YaHei UI', monospace`;
+        while(ctx.measureText(finalText).width>W-56 && size>24) {
+          size--; ctx.font=`700 ${size}px Consolas, 'Microsoft YaHei UI', monospace`;
+        }
+        ctx.textAlign='center'; ctx.textBaseline='middle';
+        ctx.shadowColor='rgba(255,191,92,.5)'; ctx.shadowBlur=13;
+        ctx.fillStyle='#fff4d5'; ctx.fillText(finalText,0,0);
+        ctx.shadowBlur=0; ctx.fillStyle='#e5ad58';
+        ctx.font='700 12px Consolas, "Microsoft YaHei UI", monospace';
+        ctx.fillText(c.milestone,0,53, W-58);
+        ctx.restore();
+      }
+      currentT=t; $('#scrub').value=p; $('#now').textContent=t.toFixed(2); $('#end').textContent=dur.toFixed(2);
+    }
+    // Analytic particles: preview, scrubbing and MP4 use the identical timeline.
+    function drawFireworks(p,duration) {
+      const elapsed=(p-.68)*duration;
+      if(elapsed<0) return;
+      const colors=['255,199,103','108,204,255','255,137,167','196,161,255','255,226,157'];
+      const positions=[[.16,.32],[.84,.28],[.27,.70],[.73,.67],[.49,.26],[.10,.60],[.91,.57]];
+      ctx.save(); ctx.globalCompositeOperation='screen'; ctx.lineCap='round';
+      const spacing=Math.max(.14,duration*.042);
+      for(let b=0;b<14;b++) {
+        const age=elapsed-b*spacing;
+        if(age<-.16 || age>1.5) continue;
+        const pos=positions[b%positions.length], bx=W*pos[0], by=H*pos[1];
+        const rgb=colors[b%colors.length];
+        if(age<0) {
+          const y=by+(H-by)*(-age/.16);
+          ctx.strokeStyle=`rgba(${rgb},.8)`;ctx.lineWidth=1.2;
+          ctx.beginPath();ctx.moveTo(bx,y+15);ctx.lineTo(bx,y);ctx.stroke();
+          continue;
+        }
+        const fade=Math.pow(Math.max(0,1-age/1.5),.85);
+        for(let i=0;i<64;i++) {
+          const angle=i/64*Math.PI*2+hash(b+3)*.5;
+          const speed=52+hash(i*31+b*13)*65;
+          const travel=(1-Math.exp(-age*1.7))/1.7;
+          const tail=(1-Math.exp(-Math.max(0,age-.10)*1.7))/1.7;
+          const x=bx+Math.cos(angle)*speed*travel;
+          const y=by+Math.sin(angle)*speed*travel+19*age*age;
+          ctx.strokeStyle=`rgba(${rgb},${fade*(.55+.45*hash(i+b))})`;
+          ctx.lineWidth=i%5===0?1.3:.7;
+          ctx.beginPath();ctx.moveTo(bx+Math.cos(angle)*speed*tail,by+Math.sin(angle)*speed*tail+19*Math.max(0,age-.10)**2);
+          ctx.lineTo(x,y);ctx.stroke();
+          ctx.fillStyle=`rgba(255,246,216,${fade})`;ctx.fillRect(x-.65,y-.65,1.3,1.3);
+        }
+      }
+      ctx.restore();
+    }
+    function stop() { playing=false; cancelAnimationFrame(raf); $('#play').textContent='▶ 播放特效'; }
+    function tick(now) {
+      if(!playing) return;
+      const dur=config().duration; const t=(now-startAt)/1000;
+      draw(Math.min(t,dur));
+      if(t<dur) raf=requestAnimationFrame(tick); else { stop(); $('#status').textContent='PLAYBACK COMPLETE'; }
+    }
+    function play() {
+      stop(); playing=true; startAt=performance.now(); $('#play').textContent='■ 停止播放'; $('#status').textContent='PLAYING'; raf=requestAnimationFrame(tick);
+    }
+    $('#play').addEventListener('click',()=>playing?stop():play());
+    $('#scrub').addEventListener('input',e=>{stop(); draw(Number(e.target.value)*config().duration); $('#status').textContent='SCRUB PREVIEW';});
+    inputs.forEach(el=>el.addEventListener('input',()=>draw(currentT)));
+    $('#saveFrame').addEventListener('click',()=>{
+      const a=document.createElement('a'); a.download=`dot-matrix-${Date.now()}.png`; a.href=canvas.toDataURL('image/png'); a.click();
+      $('#status').textContent='PNG SAVED';
+    });
+    function downloadBlob(blob, extension) {
+      const a=document.createElement('a');
+      const url=URL.createObjectURL(blob);
+      a.download=`dot-matrix-${Date.now()}.${extension}`; a.href=url; a.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
+    }
+    async function pickAvcConfig() {
+      if(typeof VideoEncoder==='undefined' || typeof VideoFrame==='undefined') return null;
+      const base={width:OUTPUT_W,height:OUTPUT_H,bitrate:7000000,framerate:FPS,hardwareAcceleration:'prefer-hardware',latencyMode:'quality',avc:{format:'avc'}};
+      for(const codec of ['avc1.42001f','avc1.4d401f']) {
+        const config={...base,codec};
+        try { if((await VideoEncoder.isConfigSupported(config)).supported) return config; } catch(_) {}
+      }
+      return null;
+    }
+    async function exportMp4() {
+      const encoderConfig=await pickAvcConfig();
+      if(!encoderConfig || typeof Mp4Muxer==='undefined') return false;
+      const c=config(), dur=c.duration, frameCount=Math.ceil(dur*FPS);
+      const target=new Mp4Muxer.ArrayBufferTarget();
+      const muxer=new Mp4Muxer.Muxer({
+        target,
+        video:{codec:'avc',width:OUTPUT_W,height:OUTPUT_H,frameRate:FPS},
+        fastStart:'in-memory',
+        firstTimestampBehavior:'offset'
+      });
+      let encoderError=null;
+      const encoder=new VideoEncoder({
+        output:(chunk,meta)=>muxer.addVideoChunk(chunk,meta),
+        error:error=>{ encoderError=error; }
+      });
+      encoder.configure(encoderConfig);
+      for(let i=0;i<frameCount;i++) {
+        const t=Math.min(i/FPS,dur); draw(t);
+        const timestamp=Math.round(i*1000000/FPS);
+        const frame=new VideoFrame(canvas,{timestamp,duration:Math.round(1000000/FPS),alpha:'discard'});
+        encoder.encode(frame,{keyFrame:i%(FPS*2)===0}); frame.close();
+        if(encoder.encodeQueueSize>10) await encoder.flush();
+        if(i%12===0) {
+          $('#status').textContent=`ENCODING MP4 ${Math.round((i+1)/frameCount*100)}%`;
+          await new Promise(resolve=>setTimeout(resolve,0));
+        }
+        if(encoderError) throw encoderError;
+      }
+      await encoder.flush(); encoder.close();
+      if(encoderError) throw encoderError;
+      muxer.finalize();
+      downloadBlob(new Blob([target.buffer],{type:'video/mp4'}),'mp4');
+      draw(dur); return true;
+    }
+    function exportWebmFallback() {
+      if(recorder) return;
+      if(typeof MediaRecorder==='undefined' || typeof canvas.captureStream!=='function') {
+        $('#status').textContent='当前浏览器不支持视频导出，请使用最新版 Chrome'; exporting=false; inputs.forEach(el=>el.disabled=false); $('#play').disabled=false; $('#scrub').disabled=false; $('#record').disabled=false; return;
+      }
+      const mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+      if(!mime){ $('#status').textContent='当前浏览器不支持视频导出，请使用最新版 Chrome'; exporting=false; inputs.forEach(el=>el.disabled=false); $('#play').disabled=false; $('#scrub').disabled=false; $('#record').disabled=false; return; }
+      const chunks=[], stream=canvas.captureStream(24);
+      recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000});
+      recorder.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+      recorder.onstop=()=>{
+        downloadBlob(new Blob(chunks,{type:mime}),'webm'); recorder=null; exporting=false; inputs.forEach(el=>el.disabled=false); $('#play').disabled=false; $('#scrub').disabled=false; $('#record').disabled=false; $('#status').textContent='设备不支持 H.264，已回退保存 WEBM';
+      };
+      $('#status').textContent='MP4 不可用，正在回退录制 WEBM'; recorder.start(); play();
+      setTimeout(()=>recorder&&recorder.stop(),config().duration*1000+180);
+    }
+    $('#record').addEventListener('click',async()=>{
+      if(exporting) return;
+      exporting=true; stop(); inputs.forEach(el=>el.disabled=true); $('#play').disabled=true; $('#scrub').disabled=true; $('#record').disabled=true; $('#status').textContent='CHECKING H.264 SUPPORT';
+      try {
+        const done=await exportMp4();
+        if(done) { $('#status').textContent='MP4 SAVED'; exporting=false; inputs.forEach(el=>el.disabled=false); $('#play').disabled=false; $('#scrub').disabled=false; $('#record').disabled=false; }
+        else exportWebmFallback();
+      } catch(error) {
+        console.error(error); $('#status').textContent='MP4 编码失败，正在回退录制 WEBM'; exportWebmFallback();
+      }
+    });
+    draw(0);
+  </script>
+</body>
+</html>

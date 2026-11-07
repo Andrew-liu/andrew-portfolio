@@ -600,8 +600,9 @@ html[lang="en"] .contact h2 { font-family: "Aptos Display", "Segoe UI Variable D
 }
 
 @media (max-width: 720px) {
-  .site-header { grid-template-columns: 1fr auto; }
-  .main-nav { display: none; }
+  .site-header { grid-template-columns: 1fr auto; height: auto; min-height: 112px; padding-block: 12px; gap: 12px; }
+  .main-nav { display: flex; grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+  .header-actions { grid-column: 2; grid-row: 1; }
   .project-grid { grid-template-columns: 1fr; }
   .project-github { flex-direction: column; }
   .project-github .project-preview { flex: none; aspect-ratio: 16 / 10; }
@@ -612,7 +613,7 @@ html[lang="en"] .contact h2 { font-family: "Aptos Display", "Segoe UI Variable D
 
 @media (max-width: 600px) {
   :root { --pad: 18px; }
-  .site-header { height: 66px; }
+  .site-header { height: auto; }
   .header-link { display: none; }
   .hero { min-height: auto; padding-top: 56px; }
   .hero-actions { grid-template-columns: 1fr; width: 100%; max-width: 320px; }
