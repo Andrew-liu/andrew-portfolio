@@ -20,6 +20,14 @@
 - **精选作品**：展示具有代表性的 AI 产品与开发者工具，每个作品都有独立的产品介绍页
 - **联系方式**：提供博客、GitHub 与 Telegram 入口
 
+## 在线工具与部署
+
+`tools/` 提供粉丝庆祝视频生成器和 HDR 头像生成器。HDR 头像在浏览器内处理，支持透明 PNG 或纯色背景抠图、线性光合成、Hamming 重采样、固定背景调色板和 400×400 PQ PNG 下载，不需要后端或 API Key。
+
+仓库的 GitHub Pages 工作流在 macOS 上运行，通过 `CGColorSpace.itur_2100_PQ` 导出原生 ICC 配置，再运行 PNG 编码测试和 CoreImage 400/48 像素解码验证，最后发布静态文件。Fork 后，在仓库 Settings → Pages 中将 Source 设为 GitHub Actions，推送 `main` 即可部署。`rec2100-pq.icc` 是构建产物，无需手工提交。
+
+在 Mac 本地预览时，先执行 `swift tools/hdr-avatar/scripts/color-profile.swift tools/hdr-avatar/rec2100-pq.icc`，再从仓库根目录启动静态 HTTP 服务。转换测试：`node tools/hdr-avatar/verify.mjs tools/hdr-avatar/rec2100-pq.icc`。
+
 ## 精选作品
 
 | 项目 | 简介 | 访问 |

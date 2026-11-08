@@ -10,6 +10,11 @@
 .tool-card { display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: rgb(255 255 255 / .025); transition: border-color .2s, transform .2s; }
 .tool-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .tool-card:focus-visible, .tools-page a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.tool-card + .tool-card { margin-top:20px; }
+.hdr-art { min-height:320px; place-items:center; background:radial-gradient(ellipse at center,#314b43,#0d1715 75%); }
+.hdr-orbit { width:210px; height:210px; border-radius:50%; display:grid; place-items:center; background:#d2fff9; box-shadow:0 0 60px #baf5e522; }
+.hdr-orbit > span { display:grid; place-items:center; width:95px; height:120px; border-radius:46%; background:#304e48; color:#d2fff9; font:70px monospace; }
+.hdr-art-label { position:absolute; left:20px; bottom:18px; color:#a2c1b7; font:9px var(--mono); letter-spacing:.12em; }
 .tool-art { position: relative; display: grid; align-items: center; background: #050505; min-width: 0; }
 .tool-art img { width: 100%; height: auto; display: block; }
 .tool-open { position: absolute; right: 18px; top: 16px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); border: 1px solid var(--line-strong); background: #161218; }

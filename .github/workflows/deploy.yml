@@ -20,10 +20,24 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Export native Rec.2100 PQ ICC
+        run: swift tools/hdr-avatar/scripts/color-profile.swift tools/hdr-avatar/rec2100-pq.icc
+
+      - name: Verify HDR PNG encoding
+        run: node tools/hdr-avatar/verify.mjs tools/hdr-avatar/rec2100-pq.icc "$RUNNER_TEMP/hdr-avatar-check.png"
+
+      - name: Verify HDR decoding with CoreImage
+        run: swift tools/hdr-avatar/scripts/color-profile.swift tools/hdr-avatar/rec2100-pq.icc "$RUNNER_TEMP/hdr-avatar-check.png"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

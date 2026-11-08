@@ -11,3 +11,6 @@ design/openpencil-layout-v2.png
 design/openpencil-mobile-v1.png
 design/openpencil-rebuild-v2.op
 design/openpencil-redesign-v1.op
+
+# Exported from the native Apple color space during the Pages build.
+tools/hdr-avatar/rec2100-pq.icc
