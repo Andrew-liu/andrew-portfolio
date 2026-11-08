@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile,writeFile} from 'node:fs/promises';
 import {inflateSync} from 'node:zlib';
-import {SIZE,WHITE,srgbToLinear,linearToSrgb,to2020,pqEncode,pqDecode,makeMatte,hammingResize,composeAvatar,convertAvatar,crc32,validateProfile} from './engine.mjs';
+import {SIZE,WHITE,srgbToLinear,linearToSrgb,to2020,pqEncode,pqDecode,makeMatte,hammingResize,composeAvatar,convertAvatar,crc32,validateProfile,shapeAlpha} from './engine.mjs';
 assert.ok(Math.abs(pqEncode(203)-.580688881)<1e-8);
 for(const n of [.1,1,203,1000,2030,10000])assert.ok(Math.abs(pqDecode(pqEncode(n))-n)<.00001);
 for(const v of [0,.02,.4,1])assert.ok(Math.abs(linearToSrgb(srgbToLinear(v))-v)<1e-9);
@@ -22,14 +22,27 @@ opaque[strand]=opaque[strand+1]=opaque[strand+2]=gray;
 const hair=makeMatte(opaque,64,64,{mode:'key',key:[255,255,255]});
 assert.ok(hair.rgba[strand+3]>.45&&hair.rgba[strand+3]<.55,'preserve mixed hair alpha');
 assert.ok(hair.rgba[strand]<.02,'remove the white background from premultiplied hair');
+const placed=new Uint8ClampedArray(16*16*4);
+for(let y=8;y<10;y++)for(let x=2;x<4;x++)placed.set([220,145,100,255],(y*16+x)*4);
+const placement=makeMatte(placed,16,16,{mode:'keep'});
+const dark=composeAvatar(placement,{personGain:1.5,backgroundGain:9});
+const light=composeAvatar(placement,{personGain:2,backgroundGain:10});
+const subject=212*400+62;
+assert.ok(light.alpha[subject]>.99,'preserve the source subject position');
+assert.equal(light.alpha[200*400+200],0,'do not recenter the source subject');
+assert.ok(light.preview[subject*4]+light.preview[subject*4+1]>dark.preview[subject*4]+dark.preview[subject*4+1],'SDR preview must reflect person brightness');
+assert.ok(light.preview[200*4+1]>dark.preview[200*4+1],'SDR preview must reflect background brightness');
+assert.equal(shapeAlpha(0,0,400,{corner:20}),0);
+assert.equal(shapeAlpha(0,0,400,{corner:0}),1);
+assert.equal(shapeAlpha(200,200,400,{shape:'circle'}),1);
 const iccPath=process.argv[2]||new URL('./rec2100-pq.icc',import.meta.url);
 const icc=new Uint8Array(await readFile(iccPath));assert.equal(validateProfile(icc),true);
 const w=256,h=256,pixels=new Uint8ClampedArray(w*h*4);
 for(let y=0;y<h;y++)for(let x=0;x<w;x++){
   const k=(y*w+x)*4;
-  if(((x-128)/55)**2+((y-132)/80)**2<=1){pixels[k]=Math.round(165+60*x/w);pixels[k+1]=Math.round(100+70*y/h);pixels[k+2]=95;pixels[k+3]=255;}
+  if(((x-128)/78)**2+((y-132)/105)**2<=1){pixels[k]=Math.round(165+60*x/w);pixels[k+1]=Math.round(100+70*y/h);pixels[k+2]=95;pixels[k+3]=255;}
 }
-const options={mode:'auto',background:'#d2fff9',personGain:1.8,backgroundGain:10,scale:1};
+const options={mode:'auto',background:'#d2fff9',personGain:1.8,backgroundGain:10,shape:'circle'};
 const result=await convertAvatar(pixels,w,h,options,icc);
 const order=[];let pos=8,profile;
 while(pos<result.png.length){
@@ -38,11 +51,12 @@ while(pos<result.png.length){
   if(type==='IHDR'){assert.equal(view.getUint32(8),400);assert.equal(view.getUint32(12),400);assert.equal(data[8],8);assert.equal(data[9],3);}
   if(type==='cICP')assert.deepEqual([...data],[9,16,0,1]);
   if(type==='iCCP'){profile=inflateSync(data.subarray(data.indexOf(0)+2));assert.deepEqual([...profile],[...icc]);}
-  if(type==='PLTE')assert.equal(data.length,255*3);
-  if(type==='IDAT'){const decoded=inflateSync(data);assert.equal(decoded.length,401*400);assert.equal(decoded[1],0,'pure background must use reserved palette index');}
+  if(type==='PLTE')assert.equal(data.length,256*3);
+  if(type==='tRNS'){assert.equal(data.length,256);assert.equal(data[255],0);assert.equal(data[0],255);}
+  if(type==='IDAT'){const decoded=inflateSync(data);assert.equal(decoded.length,401*400);assert.equal(decoded[1],255,'corner must use transparent index');assert.equal(decoded[201],0,'pure background must use reserved palette index');}
   pos+=12+length;
 }
-assert.deepEqual(order,['IHDR','cICP','iCCP','PLTE','IDAT','IEND']);assert.equal(pos,result.png.length);
+assert.deepEqual(order,['IHDR','cICP','iCCP','PLTE','tRNS','IDAT','IEND']);assert.equal(pos,result.png.length);
 assert.ok(result.stats.peak>9.5&&result.stats.peak<10.5);
 assert.ok(result.stats.personPeak<=2.25);
 assert.ok(result.stats.brightArea>.4&&result.stats.brightArea<.6);

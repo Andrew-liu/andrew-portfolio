@@ -22,7 +22,7 @@
 
 ## 在线工具与部署
 
-`tools/` 提供粉丝庆祝视频生成器和 HDR 头像生成器。HDR 头像在浏览器内处理，支持透明 PNG 或纯色背景抠图、线性光合成、Hamming 重采样、固定背景调色板和 400×400 PQ PNG 下载，不需要后端或 API Key。
+`tools/` 提供粉丝庆祝视频生成器和 HDR 头像生成器。HDR 头像在浏览器内处理，保留原始构图，支持透明圆角/圆形、透明 PNG 或纯色背景抠图、线性光合成、Hamming 重采样、固定背景调色板和 400×400 PQ PNG 下载。颜色、亮度和圆角调整后自动预览与更新下载文件，不需要后端或 API Key。
 
 仓库的 GitHub Pages 工作流在 macOS 上运行，通过 `CGColorSpace.itur_2100_PQ` 导出原生 ICC 配置，再运行 PNG 编码测试和 CoreImage 400/48 像素解码验证，最后发布静态文件。Fork 后，在仓库 Settings → Pages 中将 Source 设为 GitHub Actions，推送 `main` 即可部署。`rec2100-pq.icc` 是构建产物，无需手工提交。
 

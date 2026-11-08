@@ -113,22 +113,10 @@ export function hammingResize(rgba,w,h,outW,outH,scale,cx,cy,dx=0,dy=0) {
   }
   return out;
 }
-function autoScale(matte) {
-  const {w,h,bounds:b,rgba}=matte,cx=(b.left+b.right+1)/2,cy=(b.top+b.bottom+1)/2;
-  let lo=SIZE*.25/Math.max(b.right-b.left+1,b.bottom-b.top+1),hi=lo*8;
-  for(let step=0;step<14;step++) {
-    const scale=(lo+hi)/2;let bright=0,count=0;
-    for(let y=0;y<48;y++)for(let x=0;x<48;x++)if((x+.5-24)**2+(y+.5-24)**2<=24**2){
-      const sx=Math.floor(cx+(x+.5-24)*SIZE/48/scale),sy=Math.floor(cy+(y+.5-24)*SIZE/48/scale);
-      const a=sx<0||sx>=w||sy<0||sy>=h?0:rgba[(sy*w+sx)*4+3];bright+=a<.8?1:0;count++;
-    }
-    if(bright/count>.5)lo=scale;else hi=scale;
-  }
-  return {scale:(lo+hi)/2,cx,cy};
-}
 export function composeAvatar(matte, options) {
-  const layout=autoScale(matte),scale=layout.scale*(options.scale??1);
-  const rgba=hammingResize(matte.rgba,matte.w,matte.h,SIZE,SIZE,scale,layout.cx,layout.cy,options.dx||0,options.dy||0);
+  // Fit the complete source frame; do not recenter or resize the subject within it.
+  const scale=SIZE/Math.max(matte.w,matte.h);
+  const rgba=hammingResize(matte.rgba,matte.w,matte.h,SIZE,SIZE,scale,matte.w/2,matte.h/2);
   const bg=backgroundColor(options.background||'#d2fff9',options.backgroundGain??10);
   const linear=new Float32Array(SIZE*SIZE*3),pq=new Uint8Array(linear.length),alpha=new Float32Array(SIZE*SIZE);
   const preview=new Uint8ClampedArray(SIZE*SIZE*4),gain=options.personGain??1.8;
@@ -137,7 +125,6 @@ export function composeAvatar(matte, options) {
   levels.sort((a,b)=>a-b);
   // Normalize the foreground's upper midtones independently of the ten-times-brighter background.
   const reference=levels.length?Math.max(.04,levels[Math.floor((levels.length-1)*.9)]):1;
-  const previewBg=colorBytes(options.background||'#d2fff9').map(v=>srgbToLinear(v/255));
   for(let i=0;i<SIZE*SIZE;i++) {
     const k=i*4,a=clamp(rgba[k+3]);alpha[i]=a;
     const rgb=to2020(rgba[k],rgba[k+1],rgba[k+2]);
@@ -146,11 +133,27 @@ export function composeAvatar(matte, options) {
     const limit=max>WHITE*2.2*a?WHITE*2.2*a/max:1;
     for(let c=0;c<3;c++){
       const v=rgb[c]*multiplier*limit+bg[c]*(1-a);linear[i*3+c]=v;pq[i*3+c]=Math.round(pqEncode(v)*255);
-      preview[k+c]=Math.round(clamp(linearToSrgb(rgba[k+c]+previewBg[c]*(1-a)))*255);
     }
+    // A fixed log tone map makes both exposure sliders visible on SDR displays.
+    // It uses the same composed HDR pixels, reserving SDR headroom so pale
+    // backgrounds do not clip and hide changes between 9x and 10x.
+    const y=luminance(linear[i*3],linear[i*3+1],linear[i*3+2]);
+    const ratio=y>0?Math.log1p(y/WHITE)/Math.log(16)/y:0;
+    const display=from2020(linear[i*3],linear[i*3+1],linear[i*3+2]);
+    for(let c=0;c<3;c++)preview[k+c]=Math.round(clamp(linearToSrgb(display[c]*ratio))*255);
     preview[k+3]=255;
   }
   return {linear,pq,alpha,preview,background:bg.map(v=>Math.round(pqEncode(v)*255))};
+}
+export function shapeAlpha(x,y,size,options={}) {
+  const half=size/2,px=Math.abs(x+.5-half),py=Math.abs(y+.5-half);
+  if(options.shape==='circle')return clamp(.5-(Math.hypot(px,py)-half));
+  const radius=clamp(options.corner??20,0,50)*size/100,qx=px-(half-radius),qy=py-(half-radius);
+  return clamp(.5-(Math.hypot(Math.max(qx,0),Math.max(qy,0))+Math.min(Math.max(qx,qy),0)-radius));
+}
+export function applyPreviewShape(preview,options,size=SIZE){
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++)preview[(y*size+x)*4+3]=Math.round(shapeAlpha(x,y,size,options)*255);
+  return preview;
 }
 const distance=(a,b)=>{let s=0;for(let c=0;c<3;c++)s+=(a[c]-b[c])**2;return s;};
 export function makePalette(pq,alpha,background,count=254) {
@@ -207,12 +210,12 @@ export function dither(pq,alpha,colors,width=SIZE) {
 export function analyze(indices,colors,size=SIZE) {
   const rgb=new Float32Array(indices.length*4);let peak=0,bright=0,total=0,personPeak=0;
   for(let i=0;i<indices.length;i++){
+    if(indices[i]===255)continue;
     const p=colors[indices[i]].map(v=>pqDecode(v/255));for(let c=0;c<3;c++)rgb[i*4+c]=p[c];rgb[i*4+3]=1;
-    const x=i%size+.5-size/2,y=Math.floor(i/size)+.5-size/2;
-    if(x*x+y*y<=(size/2)**2){const l=luminance(...p)/WHITE;peak=Math.max(peak,l);bright+=l>3?1:0;total++;}
+    const l=luminance(...p)/WHITE;peak=Math.max(peak,l);bright+=l>3?1:0;total++;
   }
   const small=hammingResize(rgb,size,size,48,48,48/size,size/2,size/2);let smallBright=0,smallTotal=0;
-  for(let y=0;y<48;y++)for(let x=0;x<48;x++)if((x+.5-24)**2+(y+.5-24)**2<=24**2){const i=(y*48+x)*4;smallBright+=luminance(small[i],small[i+1],small[i+2])>WHITE*3?1:0;smallTotal++;}
+  for(let y=0;y<48;y++)for(let x=0;x<48;x++){const i=(y*48+x)*4,a=small[i+3];if(a<.5)continue;smallBright+=luminance(small[i]/a,small[i+1]/a,small[i+2]/a)>WHITE*3?1:0;smallTotal++;}
   return {peak,brightArea:bright/total,smallBrightArea:smallBright/smallTotal,colors:colors.length};
 }
 const encoder=new TextEncoder();
@@ -233,14 +236,18 @@ export async function encodePng(indices,colors,icc,size=SIZE){
   const ihdr=new Uint8Array(13),v=new DataView(ihdr.buffer);v.setUint32(0,size);v.setUint32(4,size);ihdr[8]=8;ihdr[9]=3;
   const scan=new Uint8Array((size+1)*size);for(let y=0;y<size;y++)scan.set(indices.subarray(y*size,(y+1)*size),y*(size+1)+1);
   const profile=join([encoder.encode('Rec2100 PQ'),new Uint8Array([0,0]),await deflate(icc)]);
-  return join([new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',ihdr),chunk('cICP',new Uint8Array([9,16,0,1])),chunk('iCCP',profile),chunk('PLTE',new Uint8Array(colors.flat())),chunk('IDAT',await deflate(scan)),chunk('IEND',new Uint8Array())]);
+  const transparency=colors.length===256?[chunk('tRNS',Uint8Array.from({length:256},(_,i)=>i===255?0:255))]:[];
+  return join([new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',ihdr),chunk('cICP',new Uint8Array([9,16,0,1])),chunk('iCCP',profile),chunk('PLTE',new Uint8Array(colors.flat())),...transparency,chunk('IDAT',await deflate(scan)),chunk('IEND',new Uint8Array())]);
 }
 export async function convertAvatar(bytes,w,h,options,icc,progress=()=>{}){
   progress('正在分离背景与发丝…');const matte=makeMatte(bytes,w,h,options);
   progress('正在以 Hamming 滤镜缩小并合成亮度…');const composed=composeAvatar(matte,options);
   progress('正在生成调色板与消除亮点…');const colors=makePalette(composed.pq,composed.alpha,composed.background),indices=dither(composed.pq,composed.alpha,colors);
+  // Index 0 is the fixed HDR background; index 255 is reserved for transparent corners.
+  colors.push([0,0,0]);applyPreviewShape(composed.preview,options);
+  for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++)if(shapeAlpha(x,y,SIZE,options)<.5)indices[y*SIZE+x]=255;
   const stats=analyze(indices,colors);let personPeak=0;
-  for(let i=0;i<indices.length;i++)if(composed.alpha[i]>.995)personPeak=Math.max(personPeak,luminance(...colors[indices[i]].map(v=>pqDecode(v/255)))/WHITE);
+  for(let i=0;i<indices.length;i++)if(composed.alpha[i]>.995&&indices[i]!==255)personPeak=Math.max(personPeak,luminance(...colors[indices[i]].map(v=>pqDecode(v/255)))/WHITE);
   stats.personPeak=personPeak;stats.keying=matte.keying;
   progress('正在写入 HDR 色彩配置与 PNG 校验…');const png=await encodePng(indices,colors,icc);
   return {png,preview:composed.preview,stats,key:options.key||guessBackground(bytes,w,h)};

@@ -1,4 +1,4 @@
-import {convertAvatar} from './engine.mjs';
+import {convertAvatar} from './engine.mjs?v=2';
 self.onmessage=async({data})=>{
   try {
     const result=await convertAvatar(new Uint8ClampedArray(data.pixels),data.width,data.height,data.options,new Uint8Array(data.icc),message=>self.postMessage({progress:message}));
